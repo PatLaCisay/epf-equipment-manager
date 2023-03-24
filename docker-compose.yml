@@ -1,0 +1,61 @@
+version: "3.8"
+
+services:
+
+  epf-equipment-manager-mysql:
+    image: mysql:5.7
+    container_name: epf-equipment-manager-mysql
+    restart: always
+    environment:
+      - MYSQL_DATABASE=epf-equipment-managerdb
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=epf-equipment-manager
+      - MYSQL_PASSWORD=epf-equipment-manageruser
+    volumes:
+      - type: bind
+        source: ./docker/mysql/my.cnf
+        target: /etc/mysql/conf.d/my.cnf
+    ports:
+      - "3306:3306"
+    networks:
+      - epf-equipment-manager-network
+  
+  epf-equipment-manager-phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    networks:
+      - epf-equipment-manager-network
+    ports:
+      - "8002:80"
+    environment:
+      - PMA_HOST=epf-equipment-manager-mysql
+    depends_on:
+      - epf-equipment-manager-mysql
+    restart: always
+
+  epf-equipment-manager-app:
+    build: ./docker/php/.
+    ports:
+      - "8002:8000"
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      - SYMFONY_DATABASE_HOST=epf-equipment-manager-mysql
+      - SYMFONY_DATABASE_PORT_NUMBER=3306
+      - SYMFONY_DATABASE_USER=epf-equipment-manager
+      - SYMFONY_DATABASE_NAME=epf-equipment-managerdb
+      - PHP_MEMORY_LIMIT=128M
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+    depends_on:
+      - epf-equipment-manager-mysql
+    networks:
+      - epf-equipment-manager-network
+      - default
+    restart: always
+
+networks:
+  default:
+  epf-equipment-manager-network:
+    driver: bridge
