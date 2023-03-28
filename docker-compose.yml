@@ -33,16 +33,16 @@ services:
         networks:
             - dev
     www:
-            build: php
-            container_name: www_epf_manager
-            ports:
-              - "8741:80"
-            volumes:
-                - ./php/vhosts:/etc/apache2/sites-enabled
-                - ./:/var/www
-            restart: always
-            networks:
-                - dev
+        build: php
+        container_name: www_epf_manager
+        ports:
+            - "8741:80"
+        volumes:
+            - ./php/vhosts:/etc/apache2/sites-enabled
+            - ./:/var/www
+        restart: always
+        networks:
+            - dev
 networks:
     dev:
 
