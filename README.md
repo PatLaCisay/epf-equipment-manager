@@ -1,12 +1,12 @@
-### Projet de Semestre - Manager d'equipement EPF
+# Projet de Semestre – Gestionnaire d'équipements EPF
 
-Projet réalisé par l'équipe composé de BARREAU Lucas (SCRUM Master), FRAPPE Arthus (PO) et CODACCIONI Kilian, GANDILLON Clément, ROYER Emile (devs).
+Projet réalisé par l'équipe composée de BARREAU Lucas (SCRUM Master), FRAPPE Arthus (PO) et CODACCIONI Kilian, GANDILLON Clément, ROYER Émile (devs).
 
 Cette application réalisée grâce à Symfony 5.4 avec PHP 7.4 permet de visualiser le matériel disponible à l'emprunt et de gérer ses stocks.
 
 ## Installation
 
-Cloner le projet sur votre machine :
+Cloner le projet sur votre machine :
 
 ```sh
 
@@ -14,14 +14,14 @@ $ git clone https://github.com/PatLaCisay/epf-equipment-manager.git
 
 ```
 
-Créer les images Docker du système grâce à la commande :
+Créer les images Docker du système grâce à la commande :
 
 ```sh
 
 $ docker compose up -d
 
 ```
-Théoriquement, cette commande créée 4 images et un container composé de 4 sous-containers :
+Théoriquement, cette commande crée 4 images et un conteneur composé de 4 sous-conteneurs :
 
     - epf-equipment-manager
         - phpmyadmin_epf_manager
