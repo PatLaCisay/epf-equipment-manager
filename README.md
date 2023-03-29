@@ -29,12 +29,12 @@ Théoriquement, cette commande créée 4 images et un container composé de 4 so
         - db_epf_manager
         - maildev_epf_manager
 
-Ouvrir le dossier 'project' et lancer le serveur Symfony :
+Ouvrir le dossier 'project', installer les dépendances et lancer le serveur Symfony :
 
 ```sh
 
 $ cd project
-
+$ composer install
 $ symfony server:start
 
 ```
