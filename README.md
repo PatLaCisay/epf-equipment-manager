@@ -32,9 +32,23 @@ Théoriquement, cette commande créée 4 images et un container composé de 4 so
 Ouvrir le dossier 'project', installer les dépendances et lancer le serveur Symfony :
 
 ```sh
-
+$ docker exec -it www_epf_manager bash
 $ cd project
 $ composer install
-$ symfony server:start
+$ php bin/console d:d:c #creer la bdd vide
+$ php bin/console d:m:m #creer les tables dans la bdd
 
 ```
+Ce message s'affiche alors après avoir consentit à la migration :
+
+```sh
+ WARNING! You are about to execute a migration in database "equipment_manager_db" that could result in schema changes and data loss. Are you sure you wish to continue? (yes/no) [yes]:
+ >
+
+[notice] Migrating up to DoctrineMigrations\Version20230330174953
+[notice] finished in 1512.5ms, used 20M memory, 1 migrations executed, 17 sql queries
+
+[OK] Successfully migrated to version : DoctrineMigrations\Version20230330174953   
+
+```
+Théoriquement, votre application est prête à tourner !
