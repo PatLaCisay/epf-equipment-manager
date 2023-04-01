@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TypeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TypeRepository::class)]
@@ -25,8 +27,13 @@ class Type
     #[ORM\Column(type: 'integer', nullable: true)]
     private $stock;
 
-    #[ORM\ManyToOne(targetEntity: Item::class, inversedBy: 'type')]
-    private $item;
+    #[ORM\OneToMany(mappedBy: 'typeOf', targetEntity: Item::class)]
+    private Collection $items;
+
+    public function __construct()
+    {
+        $this->items = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -81,15 +88,34 @@ class Type
         return $this;
     }
 
-    public function getItem(): ?Item
+    /**
+     * @return Collection<int, Item>
+     */
+    public function getItems(): Collection
     {
-        return $this->item;
+        return $this->items;
     }
 
-    public function setItem(?Item $item): self
+    public function addItem(Item $item): self
     {
-        $this->item = $item;
+        if (!$this->items->contains($item)) {
+            $this->items->add($item);
+            $item->setTypeOf($this);
+        }
 
         return $this;
     }
+
+    public function removeItem(Item $item): self
+    {
+        if ($this->items->removeElement($item)) {
+            // set the owning side to null (unless already changed)
+            if ($item->getTypeOf() === $this) {
+                $item->setTypeOf(null);
+            }
+        }
+
+        return $this;
+    }
+
 }
