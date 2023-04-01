@@ -27,6 +27,9 @@ class Item
     #[ORM\ManyToMany(targetEntity: Borrow::class, inversedBy: 'items')]
     private Collection $borrow;
 
+    #[ORM\ManyToOne(inversedBy: 'items')]
+    private ?Type $typeOf = null;
+
     public function __construct()
     {
         $this->type = new ArrayCollection();
@@ -62,35 +65,6 @@ class Item
         return $this;
     }
 
-    /**
-     * @return Collection<int, Type>
-     */
-    public function getType(): Collection
-    {
-        return $this->type;
-    }
-
-    public function addType(Type $type): self
-    {
-        if (!$this->type->contains($type)) {
-            $this->type[] = $type;
-            $type->setItem($this);
-        }
-
-        return $this;
-    }
-
-    public function removeType(Type $type): self
-    {
-        if ($this->type->removeElement($type)) {
-            // set the owning side to null (unless already changed)
-            if ($type->getItem() === $this) {
-                $type->setItem(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Borrow>
@@ -112,6 +86,18 @@ class Item
     public function removeBorrow(Borrow $borrow): self
     {
         $this->borrow->removeElement($borrow);
+
+        return $this;
+    }
+
+    public function getTypeOf(): ?Type
+    {
+        return $this->typeOf;
+    }
+
+    public function setTypeOf(?Type $typeOf): self
+    {
+        $this->typeOf = $typeOf;
 
         return $this;
     }
