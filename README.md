@@ -81,7 +81,7 @@ Commencez à travailler localement sur votre branche fraîchement créée. Une f
 publiez la sur le repo distant :
 
 ```sh
-$ git push feat/25 --set-upstream origin
+$ git push --set-upstream origin feat/25
 
 ```
 Une fois votre branche poussée, créez une Pull Request de votre branche vers **develop**, décrivez votre travail en donnant le titre :
