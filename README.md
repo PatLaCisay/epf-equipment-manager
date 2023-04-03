@@ -52,7 +52,7 @@ Vous devriez avoir affiché le mapping suivant :
  [OK]   App\Entity\User
 
 ```
-Théoriquement, votre application tourne ici http://0.0.0.0:8741
+Théoriquement, votre application tourne ici http://localhost:8741
 
 ## Méthodologie git
 
