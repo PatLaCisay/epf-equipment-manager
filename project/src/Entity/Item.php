@@ -21,18 +21,14 @@ class Item
     #[ORM\Column(type: 'string', length: 100)]
     private $state;
 
-    #[ORM\OneToMany(mappedBy: 'item', targetEntity: Type::class)]
-    private $type;
-
     #[ORM\ManyToMany(targetEntity: Borrow::class, inversedBy: 'items')]
     private Collection $borrow;
 
     #[ORM\ManyToOne(inversedBy: 'items')]
-    private ?Type $typeOf = null;
+    private ?Category $category = null;
 
     public function __construct()
     {
-        $this->type = new ArrayCollection();
         $this->borrow = new ArrayCollection();
     }
 
@@ -90,14 +86,14 @@ class Item
         return $this;
     }
 
-    public function getTypeOf(): ?Type
+    public function getCategory(): ?Category
     {
-        return $this->typeOf;
+        return $this->category;
     }
 
-    public function setTypeOf(?Type $typeOf): self
+    public function setCategory(?Category $category): self
     {
-        $this->typeOf = $typeOf;
+        $this->category = $category;
 
         return $this;
     }
