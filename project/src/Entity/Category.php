@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\TypeRepository;
+use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TypeRepository::class)]
-class Type
+#[ORM\Entity(repositoryClass: CategoryRepository::class)]
+class Category
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -27,7 +27,7 @@ class Type
     #[ORM\Column(type: 'integer', nullable: true)]
     private $stock;
 
-    #[ORM\OneToMany(mappedBy: 'typeOf', targetEntity: Item::class)]
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Item::class)]
     private Collection $items;
 
     public function __construct()
@@ -100,7 +100,7 @@ class Type
     {
         if (!$this->items->contains($item)) {
             $this->items->add($item);
-            $item->setTypeOf($this);
+            $item->setCategory($this);
         }
 
         return $this;
@@ -110,8 +110,8 @@ class Type
     {
         if ($this->items->removeElement($item)) {
             // set the owning side to null (unless already changed)
-            if ($item->getTypeOf() === $this) {
-                $item->setTypeOf(null);
+            if ($item->getCategory() === $this) {
+                $item->setCategory(null);
             }
         }
 

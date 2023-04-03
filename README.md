@@ -48,7 +48,7 @@ Vous devriez avoir affiché le mapping suivant :
  [OK]   App\Entity\Group
  [OK]   App\Entity\Item
  [OK]   App\Entity\Room
- [OK]   App\Entity\Type
+ [OK]   App\Entity\Category
  [OK]   App\Entity\User
 
 ```
