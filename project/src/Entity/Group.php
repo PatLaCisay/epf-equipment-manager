@@ -69,14 +69,15 @@ class Group
         return $this;
     }
 
-    public function getNamname(): ?string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setNamname(string $namname): self
+    public function setName(string $name): self
     {
-        $this->name = $namname;
+
+        $this->name = $name;
 
         return $this;
     }
