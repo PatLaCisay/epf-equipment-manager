@@ -22,7 +22,7 @@ class Group
     private Collection $borrows;
 
     #[ORM\Column(length: 255)]
-    private ?string $namname = null;
+    private ?string $name = null;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'groups')]
     private Collection $users;
@@ -71,12 +71,12 @@ class Group
 
     public function getNamname(): ?string
     {
-        return $this->namname;
+        return $this->name;
     }
 
     public function setNamname(string $namname): self
     {
-        $this->namname = $namname;
+        $this->name = $namname;
 
         return $this;
     }
