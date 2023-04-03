@@ -11,10 +11,10 @@
 <div class="example-wrapper">
     <h1>Adding a category</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/project/src/Controller/CategoryController.php'|file_link(20) }}">src/Controller/CategoryController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/project/templates/category/add.html.twig'|file_link(0) }}">templates/category/index.html.twig</a></code></li>
-    </ul>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit">
+    {{ form_end(form) }}
+
 </div>
 {% endblock %}
