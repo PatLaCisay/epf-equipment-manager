@@ -18,7 +18,7 @@ class Item
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-    #[ORM\Column(type: 'string', length: 100)]
+    #[ORM\Column(type: 'string', length: 100, enumType: ItemState::class)]
     private $state;
 
     #[ORM\ManyToMany(targetEntity: Borrow::class, inversedBy: 'items')]
@@ -49,12 +49,12 @@ class Item
         return $this;
     }
 
-    public function getState(): ?string
+    public function getState(): ?ItemState
     {
         return $this->state;
     }
 
-    public function setState(string $state): self
+    public function setState(ItemState $state): self
     {
         $this->state = $state;
 
