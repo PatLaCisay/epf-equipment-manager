@@ -6,8 +6,11 @@ use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[UniqueEntity('name')]
 class Category
 {
     #[ORM\Id]
@@ -16,21 +19,31 @@ class Category
     private $id;
 
     #[ORM\Column(type: 'string', length: 255, unique: true)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 255)]
     private $name;
 
     #[ORM\Column(type: 'blob', nullable: true)]
+    #[Assert\Image]
+    #[Assert\NotBlank]
     private $image;
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $description;
 
     #[ORM\Column(type: 'float')]
+    #[Assert\Positive]
     private $price;
 
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[Assert\PositiveOrZero]
     private $stock;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Item::class)]
+    #[Assert\Unique]
+    #[Assert\All([
+        new Assert\NotNull,
+    ])]
     private Collection $items;
 
     public function __construct()

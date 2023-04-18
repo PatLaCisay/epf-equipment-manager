@@ -6,6 +6,7 @@ use App\Repository\ItemRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
 class Item
@@ -16,16 +17,23 @@ class Item
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 255)]
     private $name;
 
     #[ORM\Column(type: 'string', length: 100, enumType: ItemState::class)]
     private $state;
 
     #[ORM\ManyToMany(targetEntity: Borrow::class, inversedBy: 'items')]
+    #[Assert\All([
+        new Assert\NotNull,
+    ])]
     private Collection $borrow;
 
     #[ORM\ManyToOne(inversedBy: 'items')]
-    private ?Category $category = null;
+    // #[Assert\Valid]
+    #[Assert\NotNull]
+    private ?Category $category;
 
     public function __construct()
     {
