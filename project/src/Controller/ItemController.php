@@ -15,4 +15,12 @@ class ItemController extends AbstractController
             'controller_name' => 'ItemController',
         ]);
     }
+
+    #[Route('/item/add', name: 'app_add_item')]
+    public function add(): Response
+    {
+        return $this->render('item/add.html.twig', [
+            'controller_name' => 'ItemController',
+        ]);
+    }
 }
