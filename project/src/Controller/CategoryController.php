@@ -24,6 +24,15 @@ class CategoryController extends AbstractController
         ]);
     }
 
+    #[Route('/category/{id}', name: 'app_view_category')]
+    public function view(Category $category): Response
+    {
+        return $this->render('category/view.html.twig', [
+            'controller_name' => 'CategoryController',
+            "category" => $category,
+        ]);
+    }
+
     #[Route('/category/add', name: 'app_add_category')]
     public function add(Request $request, ManagerRegistry $doctrine): Response
     {
