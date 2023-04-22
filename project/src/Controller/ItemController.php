@@ -24,6 +24,15 @@ class ItemController extends AbstractController
         ]);
     }
 
+    #[Route('/item/{id}', name: 'app_view_item')]
+    public function view(Item $item): Response
+    {
+        return $this->render('item/view.html.twig', [
+            'controller_name' => 'ItemController',
+            "item" => $item,
+        ]);
+    }
+
     #[Route('/item/add', name: 'app_add_item')]
     public function add(Request $request, ManagerRegistry $doctrine): Response
     {
