@@ -14,7 +14,7 @@
     <div>
     {% for item in items %}
         <div>
-            <p>{{ item.name }} ({{ item.category.name }}, {{ item.state.value }})</p>
+            <p><a href="/item/{{ item.id }}" >{{ item.name }}</a> ({{ item.category.name }}, {{ item.state.value }})</p>
         </div>
     {% endfor %}
     </div>

@@ -18,10 +18,8 @@
     <dt>État</dt>
     <dd>{{ item.state.value }}</dd>
     <dt>Catégorie</dt>
-    <dd>{{ item.category.name }}</dd>
+    <dd><a href="/category/{{ item.category.id }}">{{ item.category.name }}</a></dd>
     </dl>
-
-    <p>{{ item.category.image }}</p>
 
 </div>
 
