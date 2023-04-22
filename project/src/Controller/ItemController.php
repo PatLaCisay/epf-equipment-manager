@@ -19,7 +19,6 @@ class ItemController extends AbstractController
         $items = $doctrine->getRepository(Item::class)->findAll();
 
         return $this->render('item/index.html.twig', [
-            'controller_name' => 'ItemController',
             "items" => $items,
         ]);
     }
@@ -28,7 +27,6 @@ class ItemController extends AbstractController
     public function view(Item $item): Response
     {
         return $this->render('item/view.html.twig', [
-            'controller_name' => 'ItemController',
             "item" => $item,
         ]);
     }
@@ -49,7 +47,6 @@ class ItemController extends AbstractController
         }
 
         return $this->renderForm('item/add.html.twig', [
-            'controller_name' => 'ItemController',
             "form" => $form,
         ]);
     }

@@ -19,7 +19,6 @@ class CategoryController extends AbstractController
         $categories = $doctrine->getRepository(Category::class)->findAll();
 
         return $this->render('category/index.html.twig', [
-            'controller_name' => 'CategoryController',
             "categories" => $categories,
         ]);
     }
@@ -28,7 +27,6 @@ class CategoryController extends AbstractController
     public function view(Category $category): Response
     {
         return $this->render('category/view.html.twig', [
-            'controller_name' => 'CategoryController',
             "category" => $category,
         ]);
     }
@@ -50,7 +48,6 @@ class CategoryController extends AbstractController
         }
 
         return $this->renderForm('category/add.html.twig', [
-            'controller_name' => 'CategoryController',
             'form' => $form,
         ]);
     }
