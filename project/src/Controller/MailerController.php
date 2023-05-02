@@ -14,6 +14,7 @@ class MailerController extends AbstractController
     #[Route('/mail', name: 'app_mail')]
     public function index(MailerInterface $mailer): Response
     {
+        
         $email = (new Email())
             ->from('hello@example.com')
             ->to('you@example.com')
