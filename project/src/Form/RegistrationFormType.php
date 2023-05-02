@@ -26,14 +26,6 @@ class RegistrationFormType extends AbstractType
             ->add('first_name')
             ->add('last_name')
             ->add('email', EmailType::class,['required' => true])
-            ->add('title', ChoiceType::class, [
-                'choices' => [
-                    'Student'=>'Etudiant',
-                    'Responsible'=>'Représentant'
-                ],
-                'required' => true
-
-            ])
             /* TODO
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,

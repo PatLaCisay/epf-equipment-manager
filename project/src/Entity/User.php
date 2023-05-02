@@ -36,9 +36,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $firstName = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $title = null;
-
     #[ORM\Column(type: 'boolean', nullable:true)]
     private $isVerified = false;
 
@@ -159,19 +156,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
+    
     public function isVerified(): bool
     {
         return $this->isVerified;
