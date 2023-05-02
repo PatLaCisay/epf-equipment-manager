@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -23,7 +24,7 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('first_name')
             ->add('last_name')
-            ->add('email')
+            ->add('email', EmailType::class)
             ->add('title', ChoiceType::class, [
                 'choices' => [
                     'Student'=>'Etudiant',
@@ -52,8 +53,8 @@ class RegistrationFormType extends AbstractType
                     new Length([
                         'min' => 6,
                         'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
+                        'max' => 80,
+                        'maxMessage' => 'Your password should be at max {{ limit }} characters',
                     ]),
                 ],
             ])
