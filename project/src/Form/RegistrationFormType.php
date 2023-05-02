@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Doctrine\DBAL\Types\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -22,9 +23,9 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('first_name')
-            ->add('last_name')
-            ->add('email', EmailType::class)
+            ->add('first_name', TextType::class ,['required' => true])
+            ->add('last_name', TextType::class ,['required' => true])
+            ->add('email', EmailType::class,['required' => true])
             ->add('title', ChoiceType::class, [
                 'choices' => [
                     'Student'=>'Etudiant',
@@ -50,13 +51,13 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'Entrez un mot de passe',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'Votre mot de passe doit être composé de {{ limit }} caractères minimum.',
                         'max' => 80,
-                        'maxMessage' => 'Your password should be at max {{ limit }} characters',
+                        'maxMessage' => 'Votre mot de passe doit être composé de {{ limit }} caractères maximum.',
                     ]),
                 ],
             ])
