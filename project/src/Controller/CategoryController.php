@@ -14,10 +14,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoryController extends AbstractController
 {
     #[Route('/category', name: 'app_category')]
-    public function index(): Response
+    public function index(ManagerRegistry $doctrine): Response
     {
+        $categories = $doctrine->getRepository(Category::class)->findAll();
+
         return $this->render('category/index.html.twig', [
-            'controller_name' => 'CategoryController',
+            "categories" => $categories,
+        ]);
+    }
+
+    #[Route('/category/{id}', name: 'app_view_category')]
+    public function view(Category $category): Response
+    {
+        return $this->render('category/view.html.twig', [
+            "category" => $category,
         ]);
     }
 
@@ -38,7 +48,6 @@ class CategoryController extends AbstractController
         }
 
         return $this->renderForm('category/add.html.twig', [
-            'controller_name' => 'CategoryController',
             'form' => $form,
         ]);
     }

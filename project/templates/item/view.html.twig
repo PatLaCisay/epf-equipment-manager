@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Viewing the details of an item{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Viewing the details of an item</h1>
+
+    <h2>{{ item.name }}</h2>
+    <dl>
+    <dt>Id</dt>
+    <dd>{{ item.id }}</dd>
+    <dt>État</dt>
+    <dd>{{ item.state.value }}</dd>
+    <dt>Catégorie</dt>
+    <dd><a href="/category/{{ item.category.id }}">{{ item.category.name }}</a></dd>
+    </dl>
+
+</div>
+
+{% endblock %}

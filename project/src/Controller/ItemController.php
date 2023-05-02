@@ -14,10 +14,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class ItemController extends AbstractController
 {
     #[Route('/item', name: 'app_item')]
-    public function index(): Response
+    public function index(ManagerRegistry $doctrine): Response
     {
+        $items = $doctrine->getRepository(Item::class)->findAll();
+
         return $this->render('item/index.html.twig', [
-            'controller_name' => 'ItemController',
+            "items" => $items,
+        ]);
+    }
+
+    #[Route('/item/{id}', name: 'app_view_item')]
+    public function view(Item $item): Response
+    {
+        return $this->render('item/view.html.twig', [
+            "item" => $item,
         ]);
     }
 
@@ -37,7 +47,6 @@ class ItemController extends AbstractController
         }
 
         return $this->renderForm('item/add.html.twig', [
-            'controller_name' => 'ItemController',
             "form" => $form,
         ]);
     }
