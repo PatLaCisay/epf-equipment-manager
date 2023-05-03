@@ -23,13 +23,6 @@ class ItemController extends AbstractController
         ]);
     }
 
-    #[Route('/item/{id}', name: 'app_view_item')]
-    public function view(Item $item): Response
-    {
-        return $this->render('item/view.html.twig', [
-            "item" => $item,
-        ]);
-    }
 
     #[Route('/item/add', name: 'app_add_item')]
     public function add(Request $request, ManagerRegistry $doctrine): Response
@@ -48,6 +41,14 @@ class ItemController extends AbstractController
 
         return $this->renderForm('item/add.html.twig', [
             "form" => $form,
+        ]);
+    }
+
+    #[Route('/item/{id}', name: 'app_view_item', requirements: ['id' => '\d+'])]
+    public function view(Item $item): Response
+    {
+        return $this->render('item/view.html.twig', [
+            "item" => $item,
         ]);
     }
 }
