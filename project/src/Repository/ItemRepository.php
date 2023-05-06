@@ -39,6 +39,13 @@ class ItemRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * Finds all items whose name or category name contains
+     * the searched string.
+     *
+     * @param string $name The searched string
+     * @return array An array of matching items
+     */
     public function findByDefaultMatch(string $name): array
     {
         $entityManager = $this->getEntityManager();
@@ -55,6 +62,12 @@ class ItemRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    /**
+     * Finds all items whose name contains the searched string.
+     *
+     * @param string $name The searched string
+     * @return array An array of matching items
+     */
     public function findByNameMatch(string $name): array
     {
         $entityManager = $this->getEntityManager();
@@ -68,6 +81,12 @@ class ItemRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    /**
+     * Finds all items whose category name contains the searched string.
+     *
+     * @param string $name The searched string
+     * @return array An array of matching items
+     */
     public function findByCategoryMatch(string $name): array
     {
         $entityManager = $this->getEntityManager();
