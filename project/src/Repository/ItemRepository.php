@@ -55,6 +55,34 @@ class ItemRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function findByNameMatch(string $name): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            "SELECT i
+            FROM App\Entity\Item i
+            WHERE i.name LIKE :name"
+        )->setParameter("name", "%" . $name . "%");
+
+        return $query->getResult();
+    }
+
+    public function findByCategoryMatch(string $name): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            "SELECT i
+            FROM App\Entity\Item i
+            INNER JOIN App\Entity\Category c
+            WITH i.category = c.id
+            WHERE c.name LIKE :name"
+        )->setParameter("name", "%" . $name . "%");
+
+        return $query->getResult();
+    }
+
 //    /**
 //     * @return Item[] Returns an array of Item objects
 //     */

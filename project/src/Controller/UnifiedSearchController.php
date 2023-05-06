@@ -24,7 +24,18 @@ class UnifiedSearchController extends AbstractController
 
             switch ($form->get("criterion")->getData()) {
                 case "auto":
-                    $search_results = $doctrine->getRepository(Item::class)->findByDefaultMatch($searched_name);
+                    $search_results = $doctrine->getRepository(Item::class)
+                        ->findByDefaultMatch($searched_name);
+                    break;
+
+                case "item":
+                    $search_results = $doctrine->getRepository(Item::class)
+                        ->findByNameMatch($searched_name);
+                    break;
+
+                case "cat":
+                    $search_results = $doctrine->getRepository(Item::class)
+                        ->findByCategoryMatch($searched_name);
                     break;
 
                 default:
