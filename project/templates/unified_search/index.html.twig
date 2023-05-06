@@ -15,5 +15,15 @@
         {{ form_widget(form) }}
         <input type="submit" value="Rechercher">
     {{ form_end(form) }}
+
+    {% if results is defined %}
+        <div>
+        {% for item in results %}
+            <div>
+                <p><a href="/item/{{ item.id }}" >{{ item.name }}</a> ({{ item.category.name }}, {{ item.state.value }})</p>
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
 </div>
 {% endblock %}
