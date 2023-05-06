@@ -15,9 +15,11 @@ class UnifiedSearchType extends AbstractType
         $builder
             ->add("criterion", ChoiceType::class, [
                 "choices" => [
-                    "Automatique" => "auto",
-                    "Item" => "item",
-                    "Catégorie" => "cat",
+                    "Critère de recherche" => [
+                        "Automatique" => "auto",
+                        "Item" => "item",
+                        "Catégorie" => "cat",
+                    ],
                 ],
             ])
             ->add("query", SearchType::class)
