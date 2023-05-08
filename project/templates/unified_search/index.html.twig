@@ -20,13 +20,8 @@
         {% if results|length == 0 %}
         <p>No results found for this query.</p>
         {% endif %}
-        <div>
-        {% for item in results %}
-            <div>
-                <p><a href="/item/{{ item.id }}" >{{ item.name }}</a> ({{ item.category.name }}, {{ item.state.value }})</p>
-            </div>
-        {% endfor %}
-        </div>
+    {{ include('item/_item_list.html.twig', {items_list: results}) }}
     {% endif %}
+
 </div>
 {% endblock %}
