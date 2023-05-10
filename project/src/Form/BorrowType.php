@@ -18,13 +18,12 @@ class BorrowType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('startDate', null, ['data' => new \DateTime(),])
-            ->add('endDate')
-            ->add('description')
-            ->add('quantity')
-            //->add('stakeholder')
+            ->add('startDate', null, ['data' => new \DateTime(),'required' => true])
+            ->add('endDate',null, ['required' => true])
+            ->add('description',TextType::class,['required' => true])
+            ->add('quantity',IntType::class,['required' => true])
             ->add('stakeholder', EntityType::class, [
-                'class' => User::class,
+                'class' => User::class,'required' => true,
                 // sort stakeholder by alphabetical order
                 'query_builder' => function (EntityRepository $repository) {
                     return $repository->createQueryBuilder('user')
@@ -36,6 +35,7 @@ class BorrowType extends AbstractType
                 }
             ])
             ->add('room', EntityType::class, [
+                'required' => true,
                 'class' => Room::class,
                 'query_builder' => function (EntityRepository $repository) {
                     return $repository->createQueryBuilder('room')
@@ -46,8 +46,8 @@ class BorrowType extends AbstractType
                     return $room->getName();
                 }
             ])
-            //->add('items')
             ->add('items', EntityType::class, [
+                'required' => true,
                 'class' => Item::class,
                 'query_builder' => function (EntityRepository $repository) {
                     return $repository->createQueryBuilder('items')
@@ -59,8 +59,8 @@ class BorrowType extends AbstractType
                 },
                 'mapped' => false
             ])
-            //->add('team')
             ->add('team', EntityType::class, [
+                'required' => true,
                 'class' => Group::class,
                 'query_builder' => function (EntityRepository $repository) {
                     return $repository->createQueryBuilder('g')
