@@ -18,10 +18,10 @@ class BorrowType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('startDate', null, ['data' => new \DateTime(),'required' => true])
-            ->add('endDate',null, ['required' => true])
+            ->add('startDate', DateType::class, ['data' => new \DateTime(),'required' => true])
+            ->add('endDate',DateType::class, ['required' => true])
             ->add('description',TextType::class,['required' => true])
-            ->add('quantity',IntType::class,['required' => true])
+            ->add('quantity',NumberType::class,['required' => true])
             ->add('stakeholder', EntityType::class, [
                 'class' => User::class,'required' => true,
                 // sort stakeholder by alphabetical order
