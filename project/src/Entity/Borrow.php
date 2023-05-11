@@ -28,7 +28,7 @@ class Borrow
     private $returnDescription;
 
     #[ORM\Column(type: 'boolean')]
-    private $restituted;
+    private $restituted = false;
 
     #[ORM\Column(type: 'integer')]
     private $quantity;
