@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1bdd6883afcf7001e5c3e288fc469375",
+    "content-hash": "e60f2d3b95efd3e4864e66202eb805c6",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -4282,16 +4282,17 @@
         },
         {
             "name": "symfony/messenger",
-            "version": "v5.4.23",
+
+            "version": "v5.4.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/messenger.git",
-                "reference": "f81b9dab3d9a2f0519a4e1d077a0d40f8978bcb0"
+                "reference": "5763e92e94908089654bf19cb339c451bde71692"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/messenger/zipball/f81b9dab3d9a2f0519a4e1d077a0d40f8978bcb0",
-                "reference": "f81b9dab3d9a2f0519a4e1d077a0d40f8978bcb0",
+                "url": "https://api.github.com/repos/symfony/messenger/zipball/5763e92e94908089654bf19cb339c451bde71692",
+                "reference": "5763e92e94908089654bf19cb339c451bde71692",
                 "shasum": ""
             },
             "require": {
@@ -4352,7 +4353,9 @@
             "description": "Helps applications send and receive messages to/from other applications or via message queues",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/messenger/tree/v5.4.23"
+
+                "source": "https://github.com/symfony/messenger/tree/v5.4.22"
+
             },
             "funding": [
                 {
@@ -4368,7 +4371,8 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-18T12:56:00+00:00"
+
+            "time": "2023-03-10T10:27:29+00:00"
         },
         {
             "name": "symfony/mime",
@@ -7565,6 +7569,53 @@
                 }
             ],
             "time": "2023-04-23T19:33:36+00:00"
+        },
+        {
+            "name": "symfonycasts/verify-email-bundle",
+            "version": "v1.13.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SymfonyCasts/verify-email-bundle.git",
+                "reference": "eb7bc997f36ad872a0d56bf209fe37fed148b0a7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SymfonyCasts/verify-email-bundle/zipball/eb7bc997f36ad872a0d56bf209fe37fed148b0a7",
+                "reference": "eb7bc997f36ad872a0d56bf209fe37fed148b0a7",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=7.2.5",
+                "symfony/config": "^5.4 | ^6.0",
+                "symfony/dependency-injection": "^5.4 | ^6.0",
+                "symfony/deprecation-contracts": "^2.2 | ^3.0",
+                "symfony/http-kernel": "^5.4 | ^6.0",
+                "symfony/routing": "^5.4 | ^6.0"
+            },
+            "require-dev": {
+                "doctrine/orm": "^2.7",
+                "doctrine/persistence": "^2.0",
+                "symfony/framework-bundle": "^5.4 | ^6.0",
+                "symfony/phpunit-bridge": "^5.4 | ^6.0",
+                "vimeo/psalm": "^4.3"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "SymfonyCasts\\Bundle\\VerifyEmail\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Simple, stylish Email Verification for Symfony",
+            "support": {
+                "issues": "https://github.com/SymfonyCasts/verify-email-bundle/issues",
+                "source": "https://github.com/SymfonyCasts/verify-email-bundle/tree/v1.13.0"
+            },
+            "time": "2023-01-04T12:46:15+00:00"
         },
         {
             "name": "twig/extra-bundle",
