@@ -14,6 +14,14 @@ use App\Entity\ItemState;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
+/*
+
+This method generates dummie data using Faker from https://github.com/fzaninotto/Faker
+
+It's not beautiful code because it's only meant for dev and test purposes, feel free to 
+modify anything inside.
+
+*/
 class AppFixtures extends Fixture
 {
     public function load(ObjectManager $entityManager)
