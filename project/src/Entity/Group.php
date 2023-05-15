@@ -16,8 +16,6 @@ class Group
     #[ORM\Column]
     private ?int $id = null;
 
-
-
     #[ORM\OneToMany(mappedBy: 'team', targetEntity: Borrow::class)]
     private Collection $borrows;
 
