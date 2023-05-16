@@ -40,4 +40,23 @@ class BorrowController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    #[Route('/borrow/edit/{id}', name: 'app_edit_borrow')]
+    public function edit(Borrow $borrow, Request $request, ManagerRegistry $doctrine): Response
+    {
+        $repo = new BorrowRepository($doctrine);
+
+        $form = $this->createForm(BorrowType::class, $borrow);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repo->add($form->getData(), true);
+            
+            return $this->redirectToRoute('app_borrow');
+        }
+
+        return $this->render('borrow/edit.html.twig',[
+            'form' => $form->createView()
+        ]);
+    }
 }
