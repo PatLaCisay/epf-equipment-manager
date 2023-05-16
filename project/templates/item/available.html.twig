@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AvailableItemsController!{% endblock %}
+{% block title %}Available items{% endblock %}
 
 {% block body %}
 <style>
@@ -9,12 +9,13 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Available items</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/project/src/Controller/AvailableItemsController.php'|file_link(0) }}">src/Controller/AvailableItemsController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/project/templates/available_items/index.html.twig'|file_link(0) }}">templates/available_items/index.html.twig</a></code></li>
-    </ul>
+    {% if available_items is defined %}
+        {% if available_items|length == 0 %}
+        <p>Aucun item n'est disponible pour le moment.</p>
+        {% endif %}
+    {{ include('item/_item_list.html.twig', {items_list: available_items}) }}
+    {% endif %}
 </div>
 {% endblock %}

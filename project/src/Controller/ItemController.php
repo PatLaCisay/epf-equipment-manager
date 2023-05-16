@@ -53,10 +53,13 @@ class ItemController extends AbstractController
     }
 
     #[Route('/item/available', name: 'app_available_items')]
-    public function available(): Response
+    public function available(ManagerRegistry $doctrine): Response
     {
+        $available = $doctrine->getRepository(Item::class)->findAvailableNow();
+
         return $this->render('item/available.html.twig', [
             'controller_name' => 'AvailableItemsController',
+            "available_items" => $available,
         ]);
     }
 }
