@@ -10,6 +10,8 @@
         {% endblock %}
     </head>
     <body>
+
+        {# Navbar #}
         <div class="navbar">
             <div class="left-section">
                 <img class="logo" src="{{ asset('img/logo-epf-gestion.svg') }}" alt="Logo EPF Gestion">
@@ -22,10 +24,13 @@
                 </div>
                 <div class="login-btn">S'identifier</div>
             </div>
-        </div>        
+        </div>  
+
+        {# Contenus #}
         <div class="content">
             {% block body %}{% endblock %}
         </div>
+
         {% block javascripts %} <script src="{{ asset('js/script.js') }}"></script> {% endblock %}
     </body>
 </html>
