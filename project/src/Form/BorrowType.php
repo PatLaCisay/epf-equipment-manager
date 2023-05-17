@@ -26,7 +26,9 @@ class BorrowType extends AbstractType
             ->add('description',TextType::class,['required' => true])
             ->add('quantity',NumberType::class,['required' => true])
             ->add('stakeholder', EntityType::class, [
-                'class' => User::class,'required' => true,
+                'class' => User::class,
+                'required' => true,
+                "placeholder" => "Choisissez un utilisateur",
                 // sort stakeholder by alphabetical order
                 'query_builder' => function (EntityRepository $repository) {
                     return $repository->createQueryBuilder('user')
@@ -40,6 +42,7 @@ class BorrowType extends AbstractType
             ->add('room', EntityType::class, [
                 'required' => true,
                 'class' => Room::class,
+                "placeholder" => "Choisissez une salle",
                 'query_builder' => function (EntityRepository $repository) {
                     return $repository->createQueryBuilder('room')
                         ->select('room')
@@ -65,6 +68,7 @@ class BorrowType extends AbstractType
             ->add('team', EntityType::class, [
                 'required' => true,
                 'class' => Group::class,
+                "placeholder" => "Choisissez une équipe",
                 'query_builder' => function (EntityRepository $repository) {
                     return $repository->createQueryBuilder('g')
                         ->select('g')
