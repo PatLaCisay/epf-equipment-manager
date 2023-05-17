@@ -3,11 +3,13 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Group;
+use Doctrine\ORM\Query\QueryException;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -54,6 +56,45 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newHashedPassword);
 
         $this->save($user, true);
+    }
+
+    public function findGroups(User $user): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql =  'SELECT * FROM `group`
+                INNER JOIN `group_user` ON `group`.`id` = `group_user`.`group_id`
+                INNER JOIN `user` ON `group_user`.`user_id` = `user`.`id`
+                WHERE `user`.`id` = :userId';
+
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(array('userId'=>$user->getId()));
+
+        return $resultSet->fetchAllAssociative();
+    }
+
+    public function isDeletable(User $user){
+
+        if (in_array($user->getRoles(), ['ROLE_ADMIN'])){
+            return false;
+        }
+
+        $groupRepo=$this->getEntityManager()->getRepository(Group::class);
+
+        $groups = $this->findGroups($user);
+        
+        if (count($groups) > 0){
+            
+            foreach($groups as $group){
+    
+                if (sizeof($groupRepo->findOpenedBorrows($groupRepo->find($group["group_id"])))>0){
+                    return false;
+                }
+            }
+
+        }
+        
+        return true;
+        
     }
 
 //    /**

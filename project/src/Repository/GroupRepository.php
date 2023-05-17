@@ -39,6 +39,20 @@ class GroupRepository extends ServiceEntityRepository
         }
     }
 
+    public function findOpenedBorrows($group): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql =  'SELECT *
+                FROM `borrow`
+                INNER JOIN `group` ON `borrow`.`team_id` = `group`.`id`
+                WHERE `borrow`.`restituted` = 0 AND `group`.`id` = :groupId';
+
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(array('groupId'=>$group->getId()));
+
+        return $resultSet->fetchAllAssociative();
+    }
+
 //    /**
 //     * @return Group[] Returns an array of Group objects
 //     */
