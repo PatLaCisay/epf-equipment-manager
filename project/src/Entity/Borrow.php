@@ -6,6 +6,7 @@ use App\Repository\BorrowRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BorrowRepository::class)]
 class Borrow
@@ -16,9 +17,15 @@ class Borrow
     private $id;
 
     #[ORM\Column(type: 'date')]
+    #[Assert\Type(\DateTimeImmutable::class)]
     private $startDate;
 
     #[ORM\Column(type: 'date', nullable: true)]
+    #[Assert\Type(\DateTimeImmutable::class)]
+    #[Assert\Expression(
+        expression: "this.getStartDate() <= this.getEndDate()",
+        message: "La date de fin doit être postérieure à la date de début.",
+    )]
     private $endDate;
 
     #[ORM\Column(type: 'text', nullable: true)]
