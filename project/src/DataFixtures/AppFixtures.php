@@ -16,7 +16,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 
 /*
 
-This method generates dummie data using Faker from https://github.com/fzaninotto/Faker
+This method generates dummy data using Faker from https://github.com/fzaninotto/Faker
 
 It's not beautiful code because it's only meant for dev and test purposes, feel free to 
 modify anything inside.
@@ -32,7 +32,7 @@ class AppFixtures extends Fixture
             $categories[$i] = new Category();
             $categories[$i]->setName($faker->word)
                 ->setDescription($faker->word)//Lorem.php bugs so we create a single word for description
-                ->setPrice($faker->numberBetween($min = 1, $max = 200))
+                ->setPrice($faker->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = NULL))
                 ->setStock($faker->numberBetween($min = 1, $max = 200))
                 ->setImage($faker->imageUrl($width = 640, $height = 480))
             ;
@@ -46,7 +46,7 @@ class AppFixtures extends Fixture
             $items[$i]
             ->setName($faker->word)
             ->setState( $faker->randomElement(ItemState::values()))
-            ->setCategory($entityManager->getRepository(Category::class)->find($i % sizeof($categories)-1));
+            ->setCategory($categories[$i%count($categories)]);
             $entityManager->persist($items[$i]);
         }
 
@@ -98,10 +98,10 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 5; $i++) {
             $borrows[$i] = new Borrow();
             $borrows[$i]
-            ->setStartDate(DateTimeImmutable::createFromFormat($dateFormat,$faker->date($dateFormat = 'Y-m-d', $max = 'now')))
-            ->setEndDate(DateTimeImmutable::createFromFormat($dateFormat,$faker->date($dateFormat = 'Y-m-d', $max = 'now')))
+            ->setStartDate($faker->dateTimeBetween($startDate = '-2 years', $endDate = 'now'))
+            ->setEndDate($faker->dateTimeBetween($startDate = 'now', $endDate = '+2 years'))
             ->setDescription($faker->word)
-            ->setRestituted($faker->boolean($chanceOfGettingTrue = 50))
+            ->setRestituted($faker->boolean($chanceOfGettingTrue = 30))
             ->setRoom($rooms[$i])
             ->setStakeholder($users[$i])
             ->setTeam($groups[$i])
