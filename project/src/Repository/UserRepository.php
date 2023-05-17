@@ -86,7 +86,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             
             foreach($groups as $group){
     
-                if (sizeof($groupRepo->findOpenedBorrows($groupRepo->find($group["group_id"])))>0){
+                if (count($groupRepo->findOpenedBorrows($groupRepo->find($group["group_id"])))>0){
                     return false;
                 }
             }
