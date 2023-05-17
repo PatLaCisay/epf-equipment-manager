@@ -64,7 +64,9 @@ class BorrowType extends AbstractType
             ])
             ->add('items', EntityType::class, [
                 'required' => true,
+                "multiple" => true,
                 'class' => Item::class,
+                "help" => "Utilisez la touche contrôle pour sélectionner plusieurs objets.",
                 'query_builder' => function (EntityRepository $repository) {
                     return $repository->createQueryBuilder('items')
                         ->select('items')
