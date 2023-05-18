@@ -102,6 +102,30 @@ class ItemRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    /**
+     * Finds all items that are not borrowed at the time of request.
+     *
+     * @return array An array of available items
+     */
+    public function findAvailableNow(): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            "SELECT it
+            FROM App\Entity\Item it
+            WHERE it.id NOT IN (
+                SELECT i.id
+                FROM App\Entity\Item i
+                LEFT JOIN i.borrow b
+                WHERE b.startDate <= CURRENT_DATE()
+                AND b.endDate >= CURRENT_DATE()
+            )"
+        );
+
+        return $query->getResult();
+    }
+
 //    /**
 //     * @return Item[] Returns an array of Item objects
 //     */
