@@ -54,42 +54,6 @@ Vous devriez avoir affiché le mapping suivant :
 ```
 Théoriquement, votre application tourne ici http://localhost:8741
 
-## Méthodologie git
+## Contribution
 
-Vous travaillez sur l'issue 25, il s'agit d'une feature
-
-Ouvrez un terminal à la racine du projet "your-path/equipment-manager>" et executez les commandes suivantes :
-
-```sh
-
-$ git checkout develop
-$ git fecth
-
-```
-Assurez-vous que les modifications que vous avez en local ne rentrent pas en conflit avec celles du repo distant, sinon
-réglez les conflits en concertant les personnes mises en cause dans les défauts de version ou contactez votre SM.
-
-Si tout va bien :
-
-```sh
-$ git pull
-$ git branch feat/25
-$ git checkout feat/25
-
-```
-Commencez à travailler localement sur votre branche fraîchement créée. Une fois votre issue fonctionnelle en local,
-publiez la sur le repo distant :
-
-```sh
-$ git push --set-upstream origin feat/25
-
-```
-Une fois votre branche poussée, créez une Pull Request de votre branche vers **develop**, décrivez votre travail en donnant le titre :
-
-**"Feat #25: voici ce que j'ai fait"**
-
-Et comme corps :
-
-"#25 comment je l'ai fait"
-
-Identifiez votre SM pour qu'il passe en revue votre PR. C'est tout bon !
+Afin d'assurer que votre contribution soit en phase avec la méthodologie directrice de ce projet, consultez la page suivante: [Méthodologie de contribution](CONTRIBUTING.md)
