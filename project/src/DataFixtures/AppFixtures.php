@@ -107,8 +107,7 @@ class AppFixtures extends Fixture
             ->setTeam($groups[$i])
             ->addItem($items[$i % sizeof($items)])
             ->addItem($items[($i + 1) % sizeof($items)])
-            ->addItem($items[($i + 2) % sizeof($items)])
-            ->setQuantity($faker->numberBetween($min = 5, $max = 214));
+            ->addItem($items[($i + 2) % sizeof($items)]);
             $entityManager->persist($borrows[$i]);
         }
         

@@ -14,7 +14,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class BorrowType extends AbstractType
 {
@@ -33,8 +32,7 @@ class BorrowType extends AbstractType
                 'input' => 'datetime_immutable',
                 'widget' => 'single_text',
             ])
-            ->add('description',TextType::class,['required' => true])
-            ->add('quantity',NumberType::class,['required' => true])
+            ->add('description', TextType::class, ['required' => true])
             ->add('stakeholder', EntityType::class, [
                 'class' => User::class,
                 'required' => true,
