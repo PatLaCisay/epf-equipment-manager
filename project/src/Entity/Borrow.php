@@ -39,16 +39,16 @@ class Borrow
 
     #[ORM\ManyToOne(inversedBy: 'borrows')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $stakeholder = null;
+    private User $stakeholder;
 
     #[ORM\ManyToOne(inversedBy: 'borrows')]
-    private ?Room $room = null;
+    private Room $room;
 
     #[ORM\ManyToMany(targetEntity: Item::class, mappedBy: 'borrow')]
     private Collection $items;
 
     #[ORM\ManyToOne(inversedBy: 'borrows')]
-    private ?Group $team = null;
+    private Group $team;
 
     public function __construct()
     {
@@ -120,24 +120,24 @@ class Borrow
         return $this;
     }
 
-    public function getStakeholder(): ?User
+    public function getStakeholder(): User
     {
         return $this->stakeholder;
     }
 
-    public function setStakeholder(?User $stakeholder): self
+    public function setStakeholder(User $stakeholder): self
     {
         $this->stakeholder = $stakeholder;
 
         return $this;
     }
 
-    public function getRoom(): ?Room
+    public function getRoom(): Room
     {
         return $this->room;
     }
 
-    public function setRoom(?Room $room): self
+    public function setRoom(Room $room): self
     {
         $this->room = $room;
 
@@ -171,12 +171,12 @@ class Borrow
         return $this;
     }
 
-    public function getTeam(): ?Group
+    public function getTeam(): Group
     {
         return $this->team;
     }
 
-    public function setTeam(?Group $team): self
+    public function setTeam(Group $team): self
     {
         $this->team = $team;
 
