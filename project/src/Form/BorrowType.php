@@ -51,6 +51,8 @@ class BorrowType extends AbstractType
             ])
             ->add('items', EntityType::class, [
                 'required' => true,
+                'multiple' => true, // Permet de sélectionner plusieurs items
+                'expanded' => true, // Affiche les options sous forme de cases à cocher
                 'class' => Item::class,
                 'query_builder' => function (EntityRepository $repository) {
                     return $repository->createQueryBuilder('items')

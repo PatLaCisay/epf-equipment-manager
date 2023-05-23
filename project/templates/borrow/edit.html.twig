@@ -16,5 +16,10 @@
         <input type="submit">
     {{ form_end(form) }}
 
+    {% for item in borrow.items %}
+
+        <a href="/borrow/edit/{{borrow.id}}/remove/{{item.id}}">{{item.name}}</a>
+    {% endfor %}
+
 </div>
 {% endblock %}

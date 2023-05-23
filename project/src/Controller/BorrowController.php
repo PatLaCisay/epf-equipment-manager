@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Borrow;
 use App\Form\BorrowType;
 use App\Repository\BorrowRepository;
+use App\Repository\ItemRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,8 +32,13 @@ class BorrowController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $repo->add($form->getData(), true);
+
+            foreach($form->get('items')->getData() as $item){
+                $borrow->addItem($item);
+            }
             
+            $doctrine->getManager()->persist($borrow);
+            $doctrine->getManager()->flush();
             return $this->redirectToRoute('app_borrow');
         }
 
@@ -50,13 +56,33 @@ class BorrowController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $repo->add($form->getData(), true);
+            foreach($form->get('items')->getData() as $item){
+                $borrow->addItem($item);
+            }
             
-            return $this->redirectToRoute('app_borrow');
+            $doctrine->getManager()->persist($borrow);
+            $doctrine->getManager()->flush();
+            
+            return $this->redirectToRoute('app_edit_borrow', ['id' => $borrow->getId()]);
         }
 
         return $this->render('borrow/edit.html.twig',[
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'borrow' => $borrow
         ]);
+    }
+
+    #[Route('/borrow/edit/{id}/remove/{itemId}', name: 'app_edit_borrow_item_removal')]
+    public function removeItem(Borrow $borrow, ManagerRegistry $doctrine, $id, $itemId): Response
+    {
+        $borrowRepo = new BorrowRepository($doctrine);
+        $itemRepo = new ItemRepository($doctrine);
+
+        $borrow = $borrowRepo->find($id);
+
+        $borrow->removeItem($itemRepo->find($itemId));
+
+        $doctrine->getManager()->flush();
+        return $this->redirectToRoute('app_edit_borrow', ['id' => $id]);
     }
 }
