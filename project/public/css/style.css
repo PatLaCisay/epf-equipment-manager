@@ -12,7 +12,7 @@ body {
 * Navbar
 */
 .navbar {
-    height: 50px;
+    height: 70px;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -20,7 +20,7 @@ body {
     padding: 0 20px;
     color: #ffffff;
 
-    background: linear-gradient(90deg, rgba(68,35,110,1) 0%, rgba(228,3,16,1) 100%);
+    background: linear-gradient(90deg, rgb(20, 70, 70) 0%,  rgb(40, 134, 134) 100%);
     background-size: 200% 200%;
     animation: gradientAnimation 30s ease infinite;
 
@@ -108,7 +108,7 @@ body {
 
 .container-items {
     margin: 20px auto; /* Ajoute une marge autour des divs */
-    max-width: 800px; /* Définit une largeur maximale pour les divs */
+    max-width: 1040px; /* Définit une largeur maximale pour les divs */
     background-color: #fafafa; /* Couleur de fond */
     padding: 20px; /* Ajoute un espacement intérieur */
     border-radius: 20px; /* Ajoute une bordure arrondie si souhaité */
@@ -181,8 +181,7 @@ body {
     opacity: 1;
 }
 
-.case .btn-Emprunter,
-.case .btn-Reserver {
+.case .btn-Ajouter {
     display: inline-block;
     margin-right: 2px;
     padding: 4px;
@@ -193,18 +192,6 @@ body {
     border: 1px solid white;
 }
 
-.case .btn-Emprunter:hover,
-.case .btn-Reserver:hover {
+.case .btn-Ajouter:hover {
     background-color: rgba(255, 255, 255, 0.2);
-}
-
-/**
-* Footer
-*/
-
-/* Animation pour le gradient de la navbar */
-@keyframes gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
 }

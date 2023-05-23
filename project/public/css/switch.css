@@ -1,92 +1,66 @@
-/**
-* Contenus
-*/
+/* Styles pour le bouton switch */
 .switch {
-    position: relative;
-    width: 200px;
-    height: 50px;
-    border-radius: 25px;
-  }
-  
-  .switch input {
-    appearance: none;
-    width: 200px;
-    height: 50px;
-    border-radius: 25px;
-    background: #44236e;
-    outline: none;
-  }
-  
-  .switch input::before,
-  .switch input::after {
-    z-index: 2;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-weight: bolder;
-  }
-  
-  .switch input::before {
-    content: 'Disponible';
-    left: 25px;
-    color: #e40310;
-  }
-  
-  .switch input::after {
-    content: 'Réservé';
-    right: 30px;
-    color: #ffffff;
-  }
-  
-  .switch input:checked {
-    background: #e40310;
-  }
-  
-  .switch label {
-    z-index: 1;
-    position: absolute;
-    top: 10px;
-    bottom: 10px;
-    border-radius: 20px;
-  }
-  
-  .switch input {
-    transition: 0.25s;
-  }
-  
-  .switch input:checked::after,
-  .switch input:checked::before {
-    color: #ffffff;
-    transition: color 0.5s;
-  }
-  
-  .switch input:checked + label {
-    left: 15px;
-    right: 100px;
-    background: #44236e;
-    transition: left 0.5s, right 0.4s 0.2s;
-  }
-  
-  .switch input:not(:checked) {
-    background: #44236e;
-    transition: background 0.4s;
-  }
-  
-  /* Couleur des labels en position "Réservé" */
-  .switch input:not(:checked)::before {
-    color: #ffffff;
-    transition: color 0.5s;
-  }
-  
-  .switch input:not(:checked)::after {
-    color: #44236e;
-    transition: color 0.5s 0.2s;
-  }
-  
-  .switch input:not(:checked) + label {
-    left: 105px;
-    right: 15px;
-    background: #e40310;
-    transition: left 0.4s 0.2s, right 0.5s, background 0.35s;
-  }
-  
+  position: relative;
+  display: inline-block;
+  width: 125px;
+  height: 34px;
+}
+
+.switch input[type="checkbox"] {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(20, 70, 70);
+  border-radius: 34px;
+  cursor: pointer;
+  transition: background-color 0.4s;
+}
+
+.switch label:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.4s;
+}
+
+.switch input[type="checkbox"]:checked + label {
+  background-color: rgb(40, 134, 134);
+}
+
+.switch input[type="checkbox"]:checked + label:before {
+  transform: translateX(90px);
+}
+
+/* Styles pour les états */
+.switch input[type="checkbox"]:checked + label:after {
+  content: "Disponible";
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  transform: translateY(-50%);
+  color: white;
+  font-weight: bold;
+}
+
+.switch label:after {
+  content: "Réservé";
+  position: absolute;
+  top: 50%;
+  right: -15px;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: bold;
+}

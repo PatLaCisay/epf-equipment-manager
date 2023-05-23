@@ -10,63 +10,47 @@
     </span>
 </div>
 
-{# Items disponibles #}
+{# Items disponibles Lorem ipsum #}
 <div id="disponible" class="container-items">
-    {% if available_items_list is empty %}
-    <div class="alert">
-        <p>Aucun item disponible</p>
-    </div>
-    {% endif %}
-
-    {% for item in available_items_list %}
-    <div class="case">
-        <div class="item">
-            <div class="item-image">
-                <img src="{{ item.category.image }}" alt="image">
+    {% for i in range(0, 9) %}
+        <div class="case">
+        <a href="#">
+            <div class="item">
+                <div class="item-image">
+                    <img src="https://picsum.photos/200/200" alt="image">
+                </div>
+                <div class="item-description">
+                    <h2>
+                        Disponible
+                    </h2>
+                    <p>(Lorem Ipsum, lorme ipsum ...)</p>
+                </div>
             </div>
-            <div class="item-description">
-                <h2>
-                    <a href="/item/{{ item.id }}">
-                        {{ item.name }}
-                    </a>
-                </h2>
-                <p>({{ item.category.name }}, {{ item.state.value }})</p>
-            </div>
-        </div>
+        </a>
         <div class="action">
-            <div href="#" class="btn-Emprunter">Emprunter</div>
-            <div href="#" class="btn-Reserver">Réserver</div>
+            <div href="#" class="btn-Ajouter">Ajouter</div>
         </div>
     </div>
     {% endfor %}
 </div>
 
-{# Items reservé #}
+{# Items reservé Loremipsum #}
 <div id="reserve" class="container-items" style="display: none;">
-    {% if available_items_list is empty %}
-    <div class="alert">
-        <p>Aucun item n'est reservé pour le moment</p>
-    </div>
-    {% endif %}
-
-    {% for item in available_items_list %}
-    <div class="case">
-        <div class="item">
-            <div class="item-image">
-                <img src="{{ item.category.image }}" alt="image">
+    {% for i in range(0, 9) %}
+        <div class="case">
+        <a href="#">
+            <div class="item">
+                <div class="item-image">
+                    <img src="https://picsum.photos/200/300" alt="image">
+                </div>
+                <div class="item-description">
+                    <h2>
+                        Reservé
+                    </h2>
+                    <p>(Lorem Ipsum, lorme ipsum ...)</p>
+                </div>
             </div>
-            <div class="item-description">
-                <h2>
-                    <a href="/item/{{ item.id }}">
-                        {{ item.name }}
-                    </a>
-                </h2>
-                <p>({{ item.category.name }}, {{ item.state.value }})</p>
-            </div>
-        </div>
-        <div class="action">
-            <div href="#" class="btn-Reserver">Réserver</div>
-        </div>
+        </a>
     </div>
     {% endfor %}
 </div>
