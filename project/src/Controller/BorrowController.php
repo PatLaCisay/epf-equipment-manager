@@ -85,4 +85,12 @@ class BorrowController extends AbstractController
         $doctrine->getManager()->flush();
         return $this->redirectToRoute('app_edit_borrow', ['id' => $id]);
     }
+
+    #[Route('/borrow/remove/{id}', name: 'app_remove_borrow')]
+    public function remove(Borrow $borrow, ManagerRegistry $doctrine): Response
+    {
+        $borrowRepo = new BorrowRepository($doctrine);
+        $borrowRepo->remove($borrow, true);
+        return $this->redirectToRoute('app_borrow');
+    }
 }
