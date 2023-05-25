@@ -68,33 +68,27 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery(array('userId'=>$user->getId()));
-
+        
         return $resultSet->fetchAllAssociative();
     }
 
     public function isDeletable(User $user){
 
-        if (in_array($user->getRoles(), ['ROLE_ADMIN'])){
+        if (in_array("ROLE_ADMIN", $user->getRoles())){
             return false;
         }
 
         $groupRepo=$this->getEntityManager()->getRepository(Group::class);
-
         $groups = $this->findGroups($user);
-        
+
         if (count($groups) > 0){
-            
             foreach($groups as $group){
-    
                 if (count($groupRepo->findOpenedBorrows($groupRepo->find($group["group_id"])))>0){
                     return false;
                 }
             }
-
-        }
-        
+        }   
         return true;
-        
     }
 
 //    /**

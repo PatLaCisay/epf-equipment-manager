@@ -22,21 +22,10 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/delete/{id}', name: 'app_delete_user')]
-    public function delete(Request $request, $id,  ManagerRegistry $doctrine): Response
+    public function delete(Request $request, User $user,  ManagerRegistry $doctrine): Response
     {
         $entityManager= $doctrine->getManager();
         $userRepo = $entityManager->getRepository(User::class);
-        if($id==null){
-            return $this->render('user/index.html.twig');
-        }
-        
-        $user = $userRepo->find($id);
-
-        if (!$user) {
-            throw $this->createNotFoundException(
-                "Aucun utilisateur trouvé"
-            );    
-        }
 
         $message = 'Vous allez supprimer '.$user->getFirstName().' '.$user->getLastName().' de la BDD. Cette action est irréversible.';
 
