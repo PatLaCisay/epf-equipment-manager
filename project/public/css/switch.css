@@ -1,0 +1,66 @@
+/* Styles pour le bouton switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 125px;
+  height: 34px;
+}
+
+.switch input[type="checkbox"] {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(20, 70, 70);
+  border-radius: 34px;
+  cursor: pointer;
+  transition: background-color 0.4s;
+}
+
+.switch label:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.4s;
+}
+
+.switch input[type="checkbox"]:checked + label {
+  background-color: rgb(40, 134, 134);
+}
+
+.switch input[type="checkbox"]:checked + label:before {
+  transform: translateX(90px);
+}
+
+/* Styles pour les états */
+.switch input[type="checkbox"]:checked + label:after {
+  content: "Disponible";
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  transform: translateY(-50%);
+  color: white;
+  font-weight: bold;
+}
+
+.switch label:after {
+  content: "Réservé";
+  position: absolute;
+  top: 50%;
+  right: -15px;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: bold;
+}
