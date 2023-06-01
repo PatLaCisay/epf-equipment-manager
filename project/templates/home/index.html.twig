@@ -1,20 +1,58 @@
-{% extends 'base.html.twig' %}
+{% extends './base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Page d'accueil{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/epf-equipment-manager/project/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/epf-equipment-manager/project/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
+<div class="container-switch">
+    <span class="switch">
+        <input type="checkbox" id="switcher" name="disponible&Reserve" checked>
+        <label for="switcher"></label>
+    </span>
 </div>
+
+{# Available items Lorem ipsum #}
+<div id="disponible" class="container-items">
+    {% for i in range(0, 9) %}
+        <div class="case">
+        <a href="#">
+            <div class="item">
+                <div class="item-image">
+                    <img src="https://picsum.photos/200/200" alt="image">
+                </div>
+                <div class="item-description">
+                    <h2>
+                        Disponible
+                    </h2>
+                    <p>(Lorem Ipsum, lorme ipsum ...)</p>
+                </div>
+            </div>
+        </a>
+        <div class="action">
+            <div href="#" class="btn-Ajouter">Ajouter</div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{# Reserved items Loremipsum #}
+<div id="reserve" class="container-items" style="display: none;">
+    {% for i in range(0, 9) %}
+        <div class="case">
+        <a href="#">
+            <div class="item">
+                <div class="item-image">
+                    <img src="https://picsum.photos/200/300" alt="image">
+                </div>
+                <div class="item-description">
+                    <h2>
+                        Reservé
+                    </h2>
+                    <p>(Lorem Ipsum, lorme ipsum ...)</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
 {% endblock %}
