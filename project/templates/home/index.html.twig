@@ -10,49 +10,60 @@
     </span>
 </div>
 
-{# Available items Lorem ipsum #}
-<div id="disponible" class="container-items">
-    {% for i in range(0, 9) %}
-        <div class="case">
-        <a href="#">
-            <div class="item">
-                <div class="item-image">
-                    <img src="https://picsum.photos/200/200" alt="image">
-                </div>
-                <div class="item-description">
-                    <h2>
-                        Disponible
-                    </h2>
-                    <p>(Lorem Ipsum, lorme ipsum ...)</p>
-                </div>
-            </div>
-        </a>
-        <div class="action">
-            <div href="#" class="btn-Ajouter">Ajouter</div>
-        </div>
-    </div>
-    {% endfor %}
-</div>
+{% if available_items is defined %}
+    <div id="disponible" class="container-items">
+        {% if available_items|length == 0 %}
+        <p>Aucun item n'est disponible pour le moment.</p>
+        {% endif %}
 
-{# Reserved items Loremipsum #}
-<div id="reserve" class="container-items" style="display: none;">
-    {% for i in range(0, 9) %}
-        <div class="case">
-        <a href="#">
-            <div class="item">
-                <div class="item-image">
-                    <img src="https://picsum.photos/200/300" alt="image">
+        {% for item in available_items %}
+            <div class="case">
+            <a href="/category/{{ item.category.id }}">
+                <div class="item">
+                    <div class="item-image">
+                        {{ item.category.image }}
+                    </div>
+                    <div class="item-description">
+                        <h2>
+                            {{ item.name }}
+                        </h2>
+                        <p>n°{{ item.id }}</p>
+                    </div>
                 </div>
-                <div class="item-description">
-                    <h2>
-                        Reservé
-                    </h2>
-                    <p>(Lorem Ipsum, lorme ipsum ...)</p>
-                </div>
+            </a>
+            <div class="action">
+                <div href="#" class="btn-Ajouter">Ajouter</div>
             </div>
-        </a>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
+{% endif %}
+
+{% if rented_items is defined %}
+    <div id="reserve" class="container-items" style="display: none;">
+        {% if rented_items|length == 0 %}
+        <p>Aucun item n'est reservé pour le moment.</p>
+        {% endif %}
+
+        {% for item in rented_items %}
+            <div class="case">
+            <a href="/category/{{ item.category.id }}">
+                <div class="item">
+                    <div class="item-image">
+                        {{ item.category.image }}
+                    </div>
+                    <div class="item-description">
+                        <h2>
+                            {{ item.name }}
+                        </h2>
+                        <p>n°{{  item.id }}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endif %}
 
 {% endblock %}
