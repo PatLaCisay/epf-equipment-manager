@@ -14,19 +14,29 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class BorrowType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('startDate', DateType::class, ['data' => new \DateTime(),'required' => true])
-            ->add('endDate',DateType::class, ['required' => true])
-            ->add('description',TextType::class,['required' => true])
-            ->add('quantity',NumberType::class,['required' => true])
+            ->add('startDate', DateType::class, [
+                'data' => new \DateTimeImmutable(),
+                'required' => true,
+                'input' => 'datetime_immutable',
+                'widget' => 'single_text',
+            ])
+            ->add('endDate', DateType::class, [
+                'data' => new \DateTimeImmutable(),
+                'required' => true,
+                'input' => 'datetime_immutable',
+                'widget' => 'single_text',
+            ])
+            ->add('description', TextType::class, ['required' => true])
             ->add('stakeholder', EntityType::class, [
-                'class' => User::class,'required' => true,
+                'class' => User::class,
+                'required' => true,
+                "placeholder" => "Choisissez un utilisateur",
                 // sort stakeholder by alphabetical order
                 'query_builder' => function (EntityRepository $repository) {
                     return $repository->createQueryBuilder('user')
@@ -40,6 +50,7 @@ class BorrowType extends AbstractType
             ->add('room', EntityType::class, [
                 'required' => true,
                 'class' => Room::class,
+                "placeholder" => "Choisissez une salle",
                 'query_builder' => function (EntityRepository $repository) {
                     return $repository->createQueryBuilder('room')
                         ->select('room')
@@ -51,7 +62,9 @@ class BorrowType extends AbstractType
             ])
             ->add('items', EntityType::class, [
                 'required' => true,
+                "multiple" => true,
                 'class' => Item::class,
+                "help" => "Utilisez la touche contrôle pour sélectionner plusieurs objets.",
                 'query_builder' => function (EntityRepository $repository) {
                     return $repository->createQueryBuilder('items')
                         ->select('items')
@@ -65,6 +78,7 @@ class BorrowType extends AbstractType
             ->add('team', EntityType::class, [
                 'required' => true,
                 'class' => Group::class,
+                "placeholder" => "Choisissez une équipe",
                 'query_builder' => function (EntityRepository $repository) {
                     return $repository->createQueryBuilder('g')
                         ->select('g')
