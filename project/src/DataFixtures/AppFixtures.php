@@ -45,6 +45,7 @@ class AppFixtures extends Fixture
             $items[$i] = new Item();
             $items[$i]
             ->setName($faker->word)
+            ->setPrice($faker->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = NULL))
             ->setState( $faker->randomElement(ItemState::values()))
             ->setCategory($categories[$i%count($categories)]);
             $entityManager->persist($items[$i]);
