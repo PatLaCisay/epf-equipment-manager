@@ -36,6 +36,14 @@ class Item
     #[ORM\Column]
     private ?float $price = null;
 
+    #[ORM\OneToMany(mappedBy: 'item', targetEntity: ItemBorrow::class, orphanRemoval: true)]
+    private Collection $borrow;
+
+    public function __construct()
+    {
+        $this->borrow = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -97,6 +105,36 @@ class Item
     public function setPrice(float $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Borrow>
+     */
+    public function getBorrow(): Collection
+    {
+        return $this->borrow;
+    }
+
+    public function addBorrow(Borrow $borrow): self
+    {
+        if (!$this->borrow->contains($borrow)) {
+            $this->borrow->add($borrow);
+            $borrow->setItems($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBorrow(Borrow $borrow): self
+    {
+        if ($this->borrow->removeElement($borrow)) {
+            // set the owning side to null (unless already changed)
+            if ($borrow->getItems() === $this) {
+                $borrow->setItems(null);
+            }
+        }
 
         return $this;
     }
