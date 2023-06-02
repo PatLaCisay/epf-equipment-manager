@@ -60,21 +60,6 @@ class BorrowType extends AbstractType
                     return $room->getName();
                 }
             ])
-            ->add('items', EntityType::class, [
-                'required' => true,
-                "multiple" => true,
-                'class' => Item::class,
-                "help" => "Utilisez la touche contrôle pour sélectionner plusieurs objets.",
-                'query_builder' => function (EntityRepository $repository) {
-                    return $repository->createQueryBuilder('items')
-                        ->select('items')
-                        ->orderBy('items.name', 'ASC');
-                },
-                'choice_label' => function (Item $items) {
-                    return $items->getName();
-                },
-                'mapped' => false
-            ])
             ->add('team', EntityType::class, [
                 'required' => true,
                 'class' => Group::class,

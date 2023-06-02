@@ -44,16 +44,8 @@ class Borrow
     #[ORM\ManyToOne(inversedBy: 'borrows')]
     private Room $room;
 
-    #[ORM\ManyToMany(targetEntity: Item::class, mappedBy: 'borrow')]
-    private Collection $items;
-
     #[ORM\ManyToOne(inversedBy: 'borrows')]
     private Group $team;
-
-    public function __construct()
-    {
-        $this->items = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -140,33 +132,6 @@ class Borrow
     public function setRoom(Room $room): self
     {
         $this->room = $room;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Item>
-     */
-    public function getItems(): Collection
-    {
-        return $this->items;
-    }
-
-    public function addItem(Item $item): self
-    {
-        if (!$this->items->contains($item)) {
-            $this->items->add($item);
-            $item->addBorrow($this);
-        }
-
-        return $this;
-    }
-
-    public function removeItem(Item $item): self
-    {
-        if ($this->items->removeElement($item)) {
-            $item->removeBorrow($this);
-        }
 
         return $this;
     }

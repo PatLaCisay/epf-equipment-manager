@@ -25,12 +25,6 @@ class Item
     #[ORM\Column(type: 'string', length: 100, enumType: ItemState::class)]
     private $state;
 
-    #[ORM\ManyToMany(targetEntity: Borrow::class, inversedBy: 'items')]
-    #[Assert\All([
-        new Assert\NotNull,
-    ])]
-    private Collection $borrow;
-
     #[ORM\ManyToOne(inversedBy: 'items')]
     // #[Assert\Valid]
     #[Assert\NotNull]
@@ -41,11 +35,6 @@ class Item
 
     #[ORM\Column]
     private ?float $price = null;
-
-    public function __construct()
-    {
-        $this->borrow = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -75,32 +64,7 @@ class Item
 
         return $this;
     }
-
-
-    /**
-     * @return Collection<int, Borrow>
-     */
-    public function getBorrow(): Collection
-    {
-        return $this->borrow;
-    }
-
-    public function addBorrow(Borrow $borrow): self
-    {
-        if (!$this->borrow->contains($borrow)) {
-            $this->borrow->add($borrow);
-        }
-
-        return $this;
-    }
-
-    public function removeBorrow(Borrow $borrow): self
-    {
-        $this->borrow->removeElement($borrow);
-
-        return $this;
-    }
-
+    
     public function getCategory(): ?Category
     {
         return $this->category;
