@@ -22,9 +22,6 @@ class Item
     #[Assert\Length(min: 2, max: 255)]
     private $name;
 
-    #[ORM\Column(type: 'string', length: 100, enumType: ItemState::class)]
-    private $state;
-
     #[ORM\ManyToOne(inversedBy: 'items')]
     // #[Assert\Valid]
     #[Assert\NotNull]
@@ -57,18 +54,6 @@ class Item
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getState(): ?ItemState
-    {
-        return $this->state;
-    }
-
-    public function setState(ItemState $state): self
-    {
-        $this->state = $state;
 
         return $this;
     }
