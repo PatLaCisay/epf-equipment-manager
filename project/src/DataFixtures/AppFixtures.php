@@ -11,6 +11,7 @@ use App\Entity\Borrow;
 use DateTimeImmutable;
 use App\Entity\Category;
 use App\Entity\ItemState;
+use App\Entity\ItemBorrow;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
@@ -95,7 +96,7 @@ class AppFixtures extends Fixture
         }
         
         $borrows = Array();
-        $dateFormat = 'Y-m-d';
+        $itemBorrows=[];
         for ($i = 0; $i < 5; $i++) {
             $borrows[$i] = new Borrow();
             $borrows[$i]
@@ -105,13 +106,18 @@ class AppFixtures extends Fixture
             ->setRestituted($faker->boolean($chanceOfGettingTrue = 30))
             ->setRoom($rooms[$i])
             ->setStakeholder($users[$i])
-            ->setTeam($groups[$i])
-            ->addItem($items[$i % sizeof($items)])
-            ->addItem($items[($i + 1) % sizeof($items)])
-            ->addItem($items[($i + 2) % sizeof($items)]);
+            ->setTeam($groups[$i]);
             $entityManager->persist($borrows[$i]);
+
+            for($j=0; $j<2; $j++){
+                $itemBorrows[$j] = new ItemBorrow();
+                $itemBorrows[$j]
+                    ->setItem($items[$j % sizeof($items)])
+                    ->setBorrow($borrows[$i])
+                    ->setQuantity($faker->numberBetween($min = 0, $max = 1000));
+                $entityManager->persist($itemBorrows[$j]);
+            }
         }
-        
         $entityManager->flush();
       }
   }

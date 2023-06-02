@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Borrow;
 use App\Form\BorrowType;
-use App\Repository\BorrowRepository;
+use App\Entity\ItemBorrow;
 use App\Repository\ItemRepository;
+use App\Repository\BorrowRepository;
+use App\Repository\ItemBorrowRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,14 +26,14 @@ class BorrowController extends AbstractController
     }
 
     #[Route('/borrow/add', name: 'app_add_borrow')]
-    public function add(Request $request, ManagerRegistry $doctrine, SessionInterface $session, ItemRepository $itemRepo): Response
+    public function add(Request $request, ManagerRegistry $doctrine, SessionInterface $session, ItemRepository $itemRepo, ItemBorrowRepository $itemBorrowRepo): Response
     {
         $repo = new BorrowRepository($doctrine);
 
         $borrow = new Borrow();
         $form = $this->createForm(BorrowType::class, $borrow);
 
-        //getting items from the session cart
+        //getting items from the session's cart
         $cart=$session->get("cart",[]);
         $items = [];
 
@@ -51,9 +53,16 @@ class BorrowController extends AbstractController
         
         if ($form->isSubmitted() && $form->isValid()) {
             foreach ($items as $element) {
-                $borrow->addItem($element['item']);
+                $itemBorrow = new ItemBorrow();
+                $itemBorrow
+                    ->setItem($element['item'])
+                    ->setBorrow($borrow)
+                    ->setQuantity($element['quantity']);
+                $doctrine->getManager()->persist($itemBorrow);
             }
             $repo->add($borrow, true);
+            
+            $doctrine->getManager()->flush();
 
             return $this->redirectToRoute('app_borrow');
         }

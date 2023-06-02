@@ -59,7 +59,7 @@ class ItemController extends AbstractController
 
         return $this->render('item/available.html.twig', [
             'controller_name' => 'AvailableItemsController',
-            "available_items" => $available,
+            'available_items' => $available,
         ]);
     }
 }

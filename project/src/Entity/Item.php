@@ -117,25 +117,4 @@ class Item
         return $this->borrow;
     }
 
-    public function addBorrow(Borrow $borrow): self
-    {
-        if (!$this->borrow->contains($borrow)) {
-            $this->borrow->add($borrow);
-            $borrow->setItems($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBorrow(Borrow $borrow): self
-    {
-        if ($this->borrow->removeElement($borrow)) {
-            // set the owning side to null (unless already changed)
-            if ($borrow->getItems() === $this) {
-                $borrow->setItems(null);
-            }
-        }
-
-        return $this;
-    }
 }
