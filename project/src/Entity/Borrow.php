@@ -6,6 +6,7 @@ use App\Repository\BorrowRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BorrowRepository::class)]
 class Borrow
@@ -16,9 +17,15 @@ class Borrow
     private $id;
 
     #[ORM\Column(type: 'date')]
+    #[Assert\Type(\DateTimeImmutable::class)]
     private $startDate;
 
     #[ORM\Column(type: 'date', nullable: true)]
+    #[Assert\Type(\DateTimeImmutable::class)]
+    #[Assert\Expression(
+        expression: "this.getStartDate() <= this.getEndDate()",
+        message: "La date de fin doit être postérieure à la date de début.",
+    )]
     private $endDate;
 
     #[ORM\Column(type: 'text', nullable: true)]
@@ -30,21 +37,18 @@ class Borrow
     #[ORM\Column(type: 'boolean')]
     private $restituted = false;
 
-    #[ORM\Column(type: 'integer')]
-    private $quantity;
-
     #[ORM\ManyToOne(inversedBy: 'borrows')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $stakeholder = null;
+    private User $stakeholder;
 
     #[ORM\ManyToOne(inversedBy: 'borrows')]
-    private ?Room $room = null;
+    private Room $room;
 
     #[ORM\ManyToMany(targetEntity: Item::class, mappedBy: 'borrow')]
     private Collection $items;
 
     #[ORM\ManyToOne(inversedBy: 'borrows')]
-    private ?Group $team = null;
+    private Group $team;
 
     public function __construct()
     {
@@ -116,38 +120,24 @@ class Borrow
         return $this;
     }
 
-    public function getQuantity(): ?int
-    {
-        return $this->quantity;
-    }
-
-    public function setQuantity(int $quantity): self
-    {
-        $this->quantity = $quantity;
-
-        return $this;
-    }
-
-
-
-    public function getStakeholder(): ?User
+    public function getStakeholder(): User
     {
         return $this->stakeholder;
     }
 
-    public function setStakeholder(?User $stakeholder): self
+    public function setStakeholder(User $stakeholder): self
     {
         $this->stakeholder = $stakeholder;
 
         return $this;
     }
 
-    public function getRoom(): ?Room
+    public function getRoom(): Room
     {
         return $this->room;
     }
 
-    public function setRoom(?Room $room): self
+    public function setRoom(Room $room): self
     {
         $this->room = $room;
 
@@ -181,12 +171,12 @@ class Borrow
         return $this;
     }
 
-    public function getTeam(): ?Group
+    public function getTeam(): Group
     {
         return $this->team;
     }
 
-    public function setTeam(?Group $team): self
+    public function setTeam(Group $team): self
     {
         $this->team = $team;
 

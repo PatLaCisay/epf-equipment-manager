@@ -31,12 +31,15 @@ class BorrowController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $repo->add($form->getData(), true);
-            
+            foreach ($form->get("items")->getData() as $item) {
+                $borrow->addItem($item);
+            }
+            $repo->add($borrow, true);
+
             return $this->redirectToRoute('app_borrow');
         }
 
-        return $this->render('borrow/add.html.twig',[
+        return $this->render('borrow/add.html.twig', [
             'form' => $form->createView()
         ]);
     }
