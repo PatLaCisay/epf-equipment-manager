@@ -36,6 +36,9 @@ class Item
     #[ORM\OneToMany(mappedBy: 'item', targetEntity: ItemBorrow::class, orphanRemoval: true)]
     private Collection $borrow;
 
+    #[ORM\Column]
+    private ?int $stock = null;
+
     public function __construct()
     {
         $this->borrow = new ArrayCollection();
@@ -100,6 +103,18 @@ class Item
     public function getBorrow(): Collection
     {
         return $this->borrow;
+    }
+
+    public function getStock(): ?int
+    {
+        return $this->stock;
+    }
+
+    public function setStock(int $stock): self
+    {
+        $this->stock = $stock;
+
+        return $this;
     }
 
 }

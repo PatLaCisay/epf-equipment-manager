@@ -38,7 +38,12 @@ class CartController extends AbstractController
         $cart = $session->get("cart", []); //if cart is empty it's initialized by an empty array
 
         if(!empty($cart[$id])){
-            $cart[$id]++;
+            if($item->getStock()<=$cart[$id]){
+                $this->addFlash('error', 'Quantité maximum atteinte.');
+            }else{
+                $cart[$id]++;
+            }
+            
         }else{
             $cart[$id]=1;
         }
