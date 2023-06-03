@@ -2,10 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Item;
-use App\Entity\Room;
 use App\Entity\User;
-use App\Entity\Group;
 use App\Entity\Borrow;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
@@ -45,32 +42,6 @@ class BorrowType extends AbstractType
                 },
                 'choice_label' => function (User $user) {
                     return $user->getEmail();
-                }
-            ])
-            ->add('room', EntityType::class, [
-                'required' => true,
-                'class' => Room::class,
-                "placeholder" => "Choisissez une salle",
-                'query_builder' => function (EntityRepository $repository) {
-                    return $repository->createQueryBuilder('room')
-                        ->select('room')
-                        ->orderBy('room.name', 'ASC');
-                },
-                'choice_label' => function (Room $room) {
-                    return $room->getName();
-                }
-            ])
-            ->add('team', EntityType::class, [
-                'required' => true,
-                'class' => Group::class,
-                "placeholder" => "Choisissez une équipe",
-                'query_builder' => function (EntityRepository $repository) {
-                    return $repository->createQueryBuilder('g')
-                        ->select('g')
-                        ->orderBy('g.name', 'ASC');
-                },
-                'choice_label' => function (Group $group) {
-                    return $group->getName();
                 }
             ])
         ;

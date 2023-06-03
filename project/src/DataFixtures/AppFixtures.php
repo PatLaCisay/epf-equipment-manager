@@ -4,13 +4,9 @@ namespace App\DataFixtures;
 
 use Faker\Factory;
 use App\Entity\Item;
-use App\Entity\Room;
 use App\Entity\User;
-use App\Entity\Group;
 use App\Entity\Borrow;
-use DateTimeImmutable;
 use App\Entity\Category;
-use App\Entity\ItemState;
 use App\Entity\ItemBorrow;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -73,27 +69,6 @@ class AppFixtures extends Fixture
                     ->setPassword("password");
                 $entityManager->persist($users[$i]);
         }
-
-        $rooms = Array();
-
-        for ($i = 0; $i < 12; $i++) {
-            $rooms[$i] = new Room();
-            $rooms[$i]
-            ->setName(ucfirst($faker->randomLetter).$faker->numberBetween($min = 200, $max = 210))
-            ->setDescription($faker->word)
-            ->setReserved($faker->boolean($chanceOfGettingTrue = 50) );
-            $entityManager->persist($rooms[$i]);
-        }
-        $groups = Array();
-
-        for ($i = 0; $i < 5; $i++) {
-            $groups[$i] = new Group();
-            $groups[$i]
-            ->setName($faker->word)
-            ->addUser($users[$i + 1])
-            ->addUser($users[$i + 2]);
-            $entityManager->persist($groups[$i]);
-        }
         
         $borrows = Array();
         $itemBorrows=[];
@@ -104,9 +79,8 @@ class AppFixtures extends Fixture
             ->setEndDate($faker->dateTimeBetween($startDate = 'now', $endDate = '+2 years'))
             ->setDescription($faker->word)
             ->setRestituted($faker->boolean($chanceOfGettingTrue = 30))
-            ->setRoom($rooms[$i])
-            ->setStakeholder($users[$i])
-            ->setTeam($groups[$i]);
+            ->setStakeholder($users[0])
+            ->setProjectManager($users[$i]);
             $entityManager->persist($borrows[$i]);
 
             for($j=0; $j<2; $j++){

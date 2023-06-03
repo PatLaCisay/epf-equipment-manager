@@ -41,14 +41,12 @@ class Borrow
     #[ORM\JoinColumn(nullable: false)]
     private User $stakeholder;
 
-    #[ORM\ManyToOne(inversedBy: 'borrows')]
-    private Room $room;
-
-    #[ORM\ManyToOne(inversedBy: 'borrows')]
-    private Group $team;
-
     #[ORM\OneToMany(mappedBy: 'borrow', targetEntity: ItemBorrow::class)]
     private Collection $item;
+
+    #[ORM\ManyToOne(inversedBy: 'borrows')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $projectManager = null;
 
     public function __construct()
     {
@@ -132,30 +130,6 @@ class Borrow
         return $this;
     }
 
-    public function getRoom(): Room
-    {
-        return $this->room;
-    }
-
-    public function setRoom(Room $room): self
-    {
-        $this->room = $room;
-
-        return $this;
-    }
-
-    public function getTeam(): Group
-    {
-        return $this->team;
-    }
-
-    public function setTeam(Group $team): self
-    {
-        $this->team = $team;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, ItemBorrow>
      */
@@ -182,6 +156,18 @@ class Borrow
                 $item->setBorrow(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getProjectManager(): ?User
+    {
+        return $this->projectManager;
+    }
+
+    public function setProjectManager(?User $projectManager): self
+    {
+        $this->projectManager = $projectManager;
 
         return $this;
     }
