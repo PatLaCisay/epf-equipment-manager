@@ -127,6 +127,48 @@ class ItemRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    /**
+     * Finds all items that are borrowed at the time of request.
+     *
+     * @return array An array of rented items
+     */
+    public function findRentedNow(): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            "SELECT it
+            FROM App\Entity\Item it
+            WHERE it.id IN (
+                SELECT i.id
+                FROM App\Entity\Item i
+                LEFT JOIN i.borrow b
+                WHERE b.startDate <= CURRENT_DATE()
+                AND b.endDate >= CURRENT_DATE()
+            )"
+        );
+
+        return $query->getResult();
+    }
+
+    /**
+     * Finds all items for a given category.
+     *
+     * @return array An array of items.
+     */
+    public function findByCategory(int $id): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            "SELECT i
+            FROM App\Entity\Item i
+            WHERE i.category = :id"
+        )->setParameter("id", $id);
+
+        return $query->getResult();
+    }
+
 //    /**
 //     * @return Item[] Returns an array of Item objects
 //     */

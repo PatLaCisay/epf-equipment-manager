@@ -1,27 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Viewing the details of a category{% endblock %}
+{% block title %}Détail de la categorie {{ category.name }}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Viewing the details of a category</h1>
-
-    <h2>{{ category.name }}</h2>
-    <dl>
-    <dt>Id</dt>
-    <dd>{{ category.id }}</dd>
-    <dt>Description</dt>
-    <dd>{{ category.description }}</dd>
-    <dt>Prix unitaire</dt>
-    <dd>{{ category.price }}</dd>
-    <dt>Stock</dt>
-    <dd>{{ category.stock }}</dd>
-    </dl>
-
+<h1>Détail de la categorie {{ category.name }}</h1>
+<div class="container-items">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Id</th>
+                <th>Description</th>
+                <th>Prix unitaire</th>
+                <th>Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ category.name }}</td>
+                <td>{{ category.id }}</td>
+                <td>{{ category.description }}</td>
+                <td>{{ category.price }}</td>
+                <td>{{ category.stock }}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
+
 {% endblock %}

@@ -52,6 +52,7 @@ class ItemController extends AbstractController
         ]);
     }
 
+
     #[Route('/item/available', name: 'app_available_items')]
     public function available(ManagerRegistry $doctrine): Response
     {
