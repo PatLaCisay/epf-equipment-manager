@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre adresse électronique est vérifiée{% endblock %}
+
+{% block body %}
+
+<h1>C'est validé, {{ user.firstName }}</h1>
+
+<p>Votre adresse électronique a été vérifiée. Vous pouvez à présent fermer cet
+onglet ou continuer votre navigation.</p>
+
+<a href="/">Aller à la page d'accueil</a>
+
+{% endblock %}
