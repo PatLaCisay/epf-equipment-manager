@@ -141,8 +141,9 @@ class ItemRepository extends ServiceEntityRepository
             FROM App\Entity\Item it
             WHERE it.id IN (
                 SELECT i.id
-                FROM App\Entity\Item i
-                LEFT JOIN i.borrow b
+                FROM App\Entity\ItemBorrow ib
+                LEFT JOIN ib.item i
+                LEFT JOIN ib.borrow b
                 WHERE b.startDate <= CURRENT_DATE()
                 AND b.endDate >= CURRENT_DATE()
             )"

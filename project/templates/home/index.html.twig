@@ -47,7 +47,7 @@
                 </div>
             </a>
             <div class="action">
-                <button class="btn-Ajouter" onclick="#routePhp">Ajouter</button>
+                <button class="btn-Ajouter" onclick="location.href='/cart/add/{{ item.id }}'">Ajouter</button>
             </div>
         </div>
         {% endfor %}
@@ -71,14 +71,13 @@
                         <h2>
                             {{ item.name }}
                         </h2>
-                        <p>n°{{  item.id }}</p>
+                        <p>n°{{ item.id }}</p>
                     </div>
                 </div>
             </a>
         </div>
         {% endfor %}
     </div>
-
 {% endif %}
 
 {% endblock %}
