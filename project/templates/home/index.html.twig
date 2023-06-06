@@ -10,6 +10,21 @@
     </span>
 </div>
 
+{# categorie selection section #}
+<nav class="category-wrapper">
+  <ul class="menu">
+    {% for category in categories %}
+      <li class="menu-item">
+        <a href="/category/{{ category.id }}">
+          <button class="category-button">{{ category.name }}</button>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</nav>
+
+
+{# items section #}
 {% if available_items is defined %}
     <div id="disponible" class="container-items">
         {% if available_items|length == 0 %}
@@ -18,10 +33,10 @@
 
         {% for item in available_items %}
             <div class="case">
-            <a href="/category/{{ item.category.id }}">
+            <a href="/item/{{ item.id }}">
                 <div class="item">
                     <div class="item-image">
-                        {{ item.category.image }}
+                        <img src="{{ item.category.image }}" alt="{{ item.category.name }}">
                     </div>
                     <div class="item-description">
                         <h2>
@@ -32,7 +47,7 @@
                 </div>
             </a>
             <div class="action">
-                <div href="#" class="btn-Ajouter">Ajouter</div>
+                <button class="btn-Ajouter" onclick="#routePhp">Ajouter</button>
             </div>
         </div>
         {% endfor %}
@@ -47,10 +62,10 @@
 
         {% for item in rented_items %}
             <div class="case">
-            <a href="/category/{{ item.category.id }}">
+            <a href="/item/{{ item.id }}">
                 <div class="item">
                     <div class="item-image">
-                        {{ item.category.image }}
+                        <img src="{{ item.category.image }}" alt="{{ item.category.name }}">
                     </div>
                     <div class="item-description">
                         <h2>

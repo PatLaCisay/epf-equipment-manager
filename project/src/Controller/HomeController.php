@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Item;
-use App\Form\ItemType;
+use App\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,10 +16,12 @@ class HomeController extends AbstractController
     { 
         $available = $doctrine->getRepository(Item::class)->findAvailableNow();
         $rented = $doctrine->getRepository(Item::class)->findRentedNow();
+        $categories = $doctrine->getRepository(Category::class)->findAll();
 
         return $this->render('home/index.html.twig', [
             'available_items' => $available,
             'rented_items' => $rented,
+            'categories' => $categories,
         ]);
     }
 }

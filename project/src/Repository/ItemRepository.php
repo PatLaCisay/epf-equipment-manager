@@ -150,6 +150,24 @@ class ItemRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    /**
+     * Finds all items for a given category.
+     *
+     * @return array An array of items.
+     */
+    public function findByCategory(int $id): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            "SELECT i
+            FROM App\Entity\Item i
+            WHERE i.category = :id"
+        )->setParameter("id", $id);
+
+        return $query->getResult();
+    }
+
 //    /**
 //     * @return Item[] Returns an array of Item objects
 //     */

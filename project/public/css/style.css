@@ -94,12 +94,59 @@ body {
 }
 
 /**
-* Contenus
+* Category wrapper
+*/
+.category-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .menu {
+    max-width: 1040px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    list-style: none;
+  }
+  
+  .menu-item {
+    width: 100%;
+    padding: 10px;
+  }
+  
+  .category-button {
+    margin: 0;
+    padding: 10px 20px;
+    background-color: #f2f2f2;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    font-size: 18px;
+    color: rgb(20, 70, 70);
+    transition: background-color 0.3s ease;
+  }
+  
+  .category-button:hover {
+    background-color: #e0e0e0;
+  }
+  
+  @media (min-width: 768px) {
+    .menu-item {
+      width: auto;
+      padding: 10px;
+    }
+  }
+
+
+/**
+* Content
 */
 .container-switch {
-    margin: 20px auto; /* Ajoute une marge autour des divs */
-    max-width: 800px; /* Définit une largeur maximale pour les divs */
-    padding: 20px; /* Ajoute un espacement intérieur */
+    margin: 20px auto; 
+    max-width: 800px; 
+    padding: 20px; 
     
     align-items: center;
     justify-content: center;
@@ -107,12 +154,12 @@ body {
 }
 
 .container-items {
-    margin: 20px auto; /* Ajoute une marge autour des divs */
-    max-width: 1040px; /* Définit une largeur maximale pour les divs */
-    background-color: #fafafa; /* Couleur de fond */
-    padding: 20px; /* Ajoute un espacement intérieur */
-    border-radius: 20px; /* Ajoute une bordure arrondie si souhaité */
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.25); /* Ajoute une ombre pour donner de la profondeur */
+    margin: 20px auto; 
+    max-width: 1040px; 
+    background-color: #fafafa; 
+    padding: 20px; 
+    border-radius: 20px; 
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.25); 
 
     display: flex;
     align-items: center;
@@ -171,10 +218,11 @@ body {
     padding: 10px;
     box-sizing: border-box;
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
+    backdrop-filter: blur(10px);
 }
 
 .case:hover .action {
@@ -183,15 +231,55 @@ body {
 
 .case .btn-Ajouter {
     display: inline-block;
-    margin-right: 2px;
-    padding: 4px;
-    background-color: transparent;
+    padding: 10px 20px;
+    background-color: rgb(45, 146, 146);
     color: white;
+    font-size: 16px;
+    font-weight: bold;
     text-decoration: none;
     border-radius: 5px;
-    border: 1px solid white;
+    border: none;
+    transition: background-color 0.3s ease;
 }
 
 .case .btn-Ajouter:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgb(35, 112, 112);
+}
+
+.case .btn-Ajouter:active {
+    background-color: rgb(164, 209, 209);
+}
+
+.case .btn-Ajouter:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.5);
+}
+
+h1 {
+    text-align: center;
+    font-size: 24px;
+    padding: 20px;
+}
+
+.container-items {
+    margin: 0 auto;
+    width: 80%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
