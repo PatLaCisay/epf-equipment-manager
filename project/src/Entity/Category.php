@@ -75,7 +75,7 @@ class Category
 
     public function getImage()
     {
-        return $this->image;
+        return base64_encode(stream_get_contents($this->image));
     }
 
     public function setImage($image): self

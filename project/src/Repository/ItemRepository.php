@@ -132,7 +132,7 @@ class ItemRepository extends ServiceEntityRepository
      *
      * @return array An array of rented items
      */
-    public function findRentedNow(): array
+    /*public function findRentedNow(): array
     {
         $entityManager = $this->getEntityManager();
 
@@ -149,7 +149,7 @@ class ItemRepository extends ServiceEntityRepository
         );
 
         return $query->getResult();
-    }
+    }*/
 
     /**
      * Finds all items for a given category.

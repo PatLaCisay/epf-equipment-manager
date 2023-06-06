@@ -44,7 +44,8 @@ class AppFixtures extends Fixture
             ->setName($faker->word)
             ->setPrice($faker->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = NULL))
             ->setCategory($categories[$i%count($categories)])
-            ->setStock($faker->numberBetween($min = 1, $max = 200));
+            ->setStock($faker->numberBetween($min = 1, $max = 200))
+            ->setImage($faker->imageUrl($width = 640, $height = 480));
             $entityManager->persist($items[$i]);
         }
 
