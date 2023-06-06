@@ -6,6 +6,7 @@ use App\Repository\BorrowRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BorrowRepository::class)]
 class Borrow
@@ -16,9 +17,15 @@ class Borrow
     private $id;
 
     #[ORM\Column(type: 'date')]
+    #[Assert\Type(\DateTimeImmutable::class)]
     private $startDate;
 
     #[ORM\Column(type: 'date', nullable: true)]
+    #[Assert\Type(\DateTimeImmutable::class)]
+    #[Assert\Expression(
+        expression: "this.getStartDate() <= this.getEndDate()",
+        message: "La date de fin doit être postérieure à la date de début.",
+    )]
     private $endDate;
 
     #[ORM\Column(type: 'text', nullable: true)]
@@ -30,25 +37,20 @@ class Borrow
     #[ORM\Column(type: 'boolean')]
     private $restituted = false;
 
-    #[ORM\Column(type: 'integer')]
-    private $quantity;
+    #[ORM\ManyToOne(inversedBy: 'borrows')]
+    #[ORM\JoinColumn(nullable: false)]
+    private User $stakeholder;
+
+    #[ORM\OneToMany(mappedBy: 'borrow', targetEntity: ItemBorrow::class)]
+    private Collection $item;
 
     #[ORM\ManyToOne(inversedBy: 'borrows')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $stakeholder = null;
-
-    #[ORM\ManyToOne(inversedBy: 'borrows')]
-    private ?Room $room = null;
-
-    #[ORM\ManyToMany(targetEntity: Item::class, mappedBy: 'borrow')]
-    private Collection $items;
-
-    #[ORM\ManyToOne(inversedBy: 'borrows')]
-    private ?Group $team = null;
+    private ?User $projectManager = null;
 
     public function __construct()
     {
-        $this->items = new ArrayCollection();
+        $this->item = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -116,79 +118,56 @@ class Borrow
         return $this;
     }
 
-    public function getQuantity(): ?int
-    {
-        return $this->quantity;
-    }
-
-    public function setQuantity(int $quantity): self
-    {
-        $this->quantity = $quantity;
-
-        return $this;
-    }
-
-
-
-    public function getStakeholder(): ?User
+    public function getStakeholder(): User
     {
         return $this->stakeholder;
     }
 
-    public function setStakeholder(?User $stakeholder): self
+    public function setStakeholder(User $stakeholder): self
     {
         $this->stakeholder = $stakeholder;
 
         return $this;
     }
 
-    public function getRoom(): ?Room
-    {
-        return $this->room;
-    }
-
-    public function setRoom(?Room $room): self
-    {
-        $this->room = $room;
-
-        return $this;
-    }
-
     /**
-     * @return Collection<int, Item>
+     * @return Collection<int, ItemBorrow>
      */
-    public function getItems(): Collection
+    public function getItem(): Collection
     {
-        return $this->items;
+        return $this->item;
     }
 
-    public function addItem(Item $item): self
+    public function addItem(ItemBorrow $item): self
     {
-        if (!$this->items->contains($item)) {
-            $this->items->add($item);
-            $item->addBorrow($this);
+        if (!$this->item->contains($item)) {
+            $this->item->add($item);
+            $item->setBorrow($this);
         }
 
         return $this;
     }
 
-    public function removeItem(Item $item): self
+    public function removeItem(ItemBorrow $item): self
     {
-        if ($this->items->removeElement($item)) {
-            $item->removeBorrow($this);
+        if ($this->item->removeElement($item)) {
+            // set the owning side to null (unless already changed)
+            if ($item->getBorrow() === $this) {
+                $item->setBorrow(null);
+            }
         }
 
         return $this;
     }
 
-    public function getTeam(): ?Group
+    public function getProjectManager(): ?User
     {
-        return $this->team;
+        return $this->projectManager;
     }
 
-    public function setTeam(?Group $team): self
+    public function setProjectManager(?User $projectManager): self
     {
-        $this->team = $team;
+        $this->projectManager = $projectManager;
 
         return $this;
     }
