@@ -6,6 +6,7 @@
         <link rel="icon" href="{{ asset('img/logo-epf-gestion.ico') }}" /> {# Icon #}
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/home.css') }}">
             <link rel="stylesheet" href="{{ asset('css/switch.css') }}">
         {% endblock %}
     </head>
@@ -19,15 +20,20 @@
                 </a>
                 <div class="nom">EPF Gestion</div>
             </div>
-            
+
             <div class="right-section">
                 <div class="searchbar">
                     <input type="text" placeholder="Rechercher...">
-                    <img class="icon" src="{{ asset('img/search.svg') }}" alt="Rechercher">
+                    <button class="search-button" onclick="location.href='/search/'">
+                        <img class="icon" src="{{ asset('img/search.svg') }}" alt="Rechercher">
+                    </button>
                 </div>
-                <div class="login-btn">S'identifier</div>
+                <a href="/login/" class="login-btn">S'identifier</a>
+                <a href="/cart/" class="cart-button" data-count="{{ app.session.get('cart') | length }}">Panier</a>
             </div>
-        </div>  
+        </div>
+
+
 
         {# Content #}
         <div class="content">

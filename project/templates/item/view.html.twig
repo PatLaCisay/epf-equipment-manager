@@ -5,13 +5,12 @@
 {% block body %}
 
 <h1>Détails de l'élément {{ item.name }}</h1>
-<div class="container-items">
+<div class="container">
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Nom</th>
-                <th>État</th>
                 <th>Catégorie</th>
             </tr>
         </thead>
@@ -19,7 +18,6 @@
             <tr>
                 <td>{{ item.id }}</td>
                 <td>{{ item.name }}</td>
-                <td>{{ item.state.value }}</td>
                 <td><a href="/category/{{ item.category.id }}">{{ item.category.name }}</a></td>
             </tr>
         </tbody>

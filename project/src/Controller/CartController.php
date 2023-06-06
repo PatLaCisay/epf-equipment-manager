@@ -50,7 +50,7 @@ class CartController extends AbstractController
 
         $session->set("cart", $cart);
 
-        return $this->redirectToRoute("app_cart");
+        return $this->redirectToRoute("app_home");
     }
 
     #[Route('/cart/remove/{id}', name: 'app_cart_remove')]
