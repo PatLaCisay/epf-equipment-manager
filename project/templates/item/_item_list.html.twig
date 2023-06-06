@@ -3,7 +3,7 @@
 <div>
 {% for item in items_list %}
     <div>
-        <p><a href="/item/{{ item.id }}">{{ item.name }}</a> ({{ item.category.name }}, {{ item.state.value }})</p>
+        <p><a href="/item/{{ item.id }}">{{ item.name }}</a> ({{ item.category.name }})</p>
     </div>
 {% endfor %}
 </div>

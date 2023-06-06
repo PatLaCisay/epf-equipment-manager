@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CartController!{% endblock %}
+
+{% block body %}
+    <section>
+        <h1>Votre panier</h1>
+    </section>
+
+    <table>
+        <tbody>
+            <tr>Image</tr>
+            <tr>Objet</tr>
+            <tr>Quantité</tr>
+            <tr></tr>
+
+            {% for element in items %}
+                <td>{{element.item.image}}</td>
+                <td>{{element.item.name}}</td>
+                <td>{{element.quantity}}
+                    <a href="{{path('app_cart_add', {id: element.item.id})}}">Ajouter</a>
+                    <a href="{{path('app_cart_remove', {id: element.item.id})}}">Retirer</a>
+                </td>
+                <td>
+                    <a href="{{path('app_cart_delete', {id: element.item.id})}}">Supprimer</a>
+                </td>
+            {% else %}
+                <h3>Votre panier est vide </h3>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+    <a href="{{path('app_add_borrow')}}">Valider mon emprunt</a>
+{% endblock %}

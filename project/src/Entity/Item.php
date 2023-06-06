@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ItemRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -21,19 +22,22 @@ class Item
     #[Assert\Length(min: 2, max: 255)]
     private $name;
 
-    #[ORM\Column(type: 'string', length: 100, enumType: ItemState::class)]
-    private $state;
-
-    #[ORM\ManyToMany(targetEntity: Borrow::class, inversedBy: 'items')]
-    #[Assert\All([
-        new Assert\NotNull,
-    ])]
-    private Collection $borrow;
-
     #[ORM\ManyToOne(inversedBy: 'items')]
     // #[Assert\Valid]
     #[Assert\NotNull]
     private ?Category $category;
+
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    private $image = null;
+
+    #[ORM\Column]
+    private ?float $price = null;
+
+    #[ORM\OneToMany(mappedBy: 'item', targetEntity: ItemBorrow::class, orphanRemoval: true)]
+    private Collection $borrow;
+
+    #[ORM\Column]
+    private ?int $stock = null;
 
     public function __construct()
     {
@@ -56,44 +60,7 @@ class Item
 
         return $this;
     }
-
-    public function getState(): ?ItemState
-    {
-        return $this->state;
-    }
-
-    public function setState(ItemState $state): self
-    {
-        $this->state = $state;
-
-        return $this;
-    }
-
-
-    /**
-     * @return Collection<int, Borrow>
-     */
-    public function getBorrow(): Collection
-    {
-        return $this->borrow;
-    }
-
-    public function addBorrow(Borrow $borrow): self
-    {
-        if (!$this->borrow->contains($borrow)) {
-            $this->borrow->add($borrow);
-        }
-
-        return $this;
-    }
-
-    public function removeBorrow(Borrow $borrow): self
-    {
-        $this->borrow->removeElement($borrow);
-
-        return $this;
-    }
-
+    
     public function getCategory(): ?Category
     {
         return $this->category;
@@ -105,4 +72,49 @@ class Item
 
         return $this;
     }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Borrow>
+     */
+    public function getBorrow(): Collection
+    {
+        return $this->borrow;
+    }
+
+    public function getStock(): ?int
+    {
+        return $this->stock;
+    }
+
+    public function setStock(int $stock): self
+    {
+        $this->stock = $stock;
+
+        return $this;
+    }
+
 }
