@@ -16,21 +16,18 @@ class UnifiedSearchController extends AbstractController
     public function index(Request $request, ManagerRegistry $doctrine): Response
     {
         $form = $request->query->get('search');
+        $searched_name = null;
+        $search_results = null;
 
         if ($form) {
             $searched_name = $form;
             $search_results = $doctrine->getRepository(Item::class)
                         ->findByDefaultMatch($form);
-
-            return $this->renderForm('unified_search/index.html.twig', [
-                'controller_name' => 'UnifiedSearchController',
-                'keyword' => $searched_name,
-                'results' => $search_results,
-            ]);
         }
 
         return $this->renderForm('unified_search/index.html.twig', [
-            'controller_name' => 'UnifiedSearchController',
+            'keyword' => $searched_name,
+            'results' => $search_results,
         ]);
     }
 }

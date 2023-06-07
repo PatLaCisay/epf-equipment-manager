@@ -25,8 +25,8 @@
                 <form class="searchbar" action="/search/" method="get">
                         <input type="text" name="search" placeholder="Rechercher...">
                         <button class="search-button" type="submit">
-                        <img class="icon" src="{{ asset('img/search.svg') }}" alt="Rechercher">
-                    </button>
+                            <img class="icon" src="{{ asset('img/search.svg') }}" alt="Rechercher">
+                        </button>
                 </form>
                 <a href="/login/" class="login-btn">S'identifier</a>
                 <a href="/cart/" class="cart-button" data-count="{{ app.session.get('cart') | length }}">Panier</a>
