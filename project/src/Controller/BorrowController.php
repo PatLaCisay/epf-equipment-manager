@@ -32,8 +32,6 @@ class BorrowController extends AbstractController
 
         $borrow = new Borrow();
         $form = $this->createForm(BorrowType::class, $borrow);
-
-        //getting items from the session's cart
         $cart=$session->get("cart",[]);
         $items = [];
 
