@@ -137,7 +137,7 @@ body {
 /* other */
 .container {
     margin: 20px auto; 
-    max-width: 1040px; 
+    max-width: 90%; 
     background-color: #fafafa; 
     padding: 20px; 
     border-radius: 20px; 

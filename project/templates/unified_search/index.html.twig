@@ -1,15 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Search{% endblock %}
+{% block title %}Résultats de recherche{% endblock %}
 
 {% block body %}
 
+{% if keyword is defined %}
+<h1>Résultats de recherche pour <strong>{{ keyword }}</strong></h1>
+{% else %}
 <h1>Résultats de recherche</h1>
+{% endif %}
+
 <div class="container">
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Rechercher">
-    {{ form_end(form) }}
 
     {% if results is defined %}
         {% if results|length == 0 %}
