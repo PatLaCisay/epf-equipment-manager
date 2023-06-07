@@ -1,9 +1,31 @@
 {# Item list fragment #}
 
-<div>
-{% for item in items_list %}
-    <div>
-        <p><a href="/item/{{ item.id }}">{{ item.name }}</a> ({{ item.category.name }})</p>
-    </div>
-{% endfor %}
-</div>
+<table class="table table-striped">
+    <tbody> 
+        <tr>
+            <th>Id</th>
+            <th>Image</th>
+            <th>Nom</th>
+            <th>Cat&eacute;gorie</th>
+            <th></th>
+        </tr>
+    
+        {% for item in items_list %}
+            <tr>
+                <td> {{item.id}} </td>
+                <td>
+                    <img class="image" src="data:image/png;base64,{{ item.image }}" width="200" height="150" alt="{{ item.name }}">
+                </td>
+                <td>
+                    <a href="/item/{{ item.id }}">{{ item.name }}</a>
+                </td>
+                <td> {{ item.category.name }} </td>
+                <td>
+                    <div class="action">
+                        <button class="btn-Ajouter" onclick="location.href='/cart/add/{{ item.id }}'">Ajouter</button>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
