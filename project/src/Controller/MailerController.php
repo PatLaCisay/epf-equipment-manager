@@ -14,15 +14,17 @@ class MailerController extends AbstractController
     #[Route('/mail', name: 'app_mail')]
     public function index(MailerInterface $mailer): Response
     {
-        
+
+        $sender_email = $_ENV["EMAIL_ADDRESS"];
+
         $email = (new Email())
-            ->from('hello@example.com')
-            ->to('you@example.com')
-            ->subject('Test de MailDev')
-            ->text('Ceci est un mail de test');
+            ->from($sender_email)
+            ->to($sender_email)
+            ->subject('Test d\'envoi')
+            ->text('Ceci est un courriel envoyé depuis Symfony.');
         $mailer->send($email);
 
-        return $this->render('home/index.html.twig', [
+        return $this->render('mailer/index.html.twig', [
             'controller_name' => 'HomeController',
         ]);
     }
