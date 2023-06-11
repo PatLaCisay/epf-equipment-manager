@@ -1,32 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Adding a borrow!{% endblock %}
+{% block title %}G&eacute;n&eacute;rer votre emprunt !{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Adding a borrow</h1>
+<h1>G&eacute;n&eacute;rer votre emprunt</h1>
+<div class="container">
+    
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
         
-        <table>
+        <table class="table table-striped">
+            <h4>R&eacute;sum&eacute; de votre emprunt</h4>
             <tbody>
-                <tr>Image</tr>
-                <tr>Objet</tr>
-                <tr>Quantité</tr>
-                <tr></tr>
-
+                <tr>
+                    <th>Image</th>
+                    <th>Objet</th>
+                    <th>Quantit&eacute;</th>
+                    <th></th>
+                </tr>
+                <tr>
                 {% for element in items %}
-                    <td>{{element.item.image}}</td>
+                    <td><img width="200" height="150" class="image" src="data:image/png;base64,{{element.item.image}}" ></td>
                     <td>{{element.item.name}}</td>
-                    <td>{{element.quantity}}
-                        <a href="{{path('app_cart_add', {id: element.item.id})}}">Ajouter</a>
-                        <a href="{{path('app_cart_remove', {id: element.item.id})}}">Retirer</a>
+                    <td>
+                        <a href="{{path('app_cart_remove', {id: element.item.id})}}">-</a>
+                        {{element.quantity}}
+                        <a href="{{path('app_cart_add', {id: element.item.id})}}">+</a>
                     </td>
                     <td>
                         <a href="{{path('app_cart_delete', {id: element.item.id})}}">Supprimer</a>
@@ -34,6 +34,7 @@
                 {% else %}
                     <h3>Votre panier est vide </h3>
                 {% endfor %}
+                </tr>
             </tbody>
 
         </table>

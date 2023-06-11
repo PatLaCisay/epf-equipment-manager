@@ -177,3 +177,8 @@ th {
 tr:nth-child(even) {
     background-color: #f9f9f9;
 }
+.image{
+    max-width: auto;
+    height: auto;
+    object-fit: cover;
+}

@@ -33,23 +33,23 @@
 
         {% for item in available_items %}
             <div class="case">
-            <a href="/item/{{ item.id }}">
-                <div class="item">
-                    <div class="item-image">
-                        <img src="{{ item.category.image }}" alt="{{ item.category.name }}">
+                <a href="/item/{{ item.id }}">
+                    <div class="item">
+                        <div class="item-image">
+                            <img src="data:image/png;base64,{{ item.image }}" alt="{{ item.name }}">
+                        </div>
+                        <div class="item-description">
+                            <h2>
+                                {{ item.name }}
+                            </h2>
+                            <p>n°{{ item.id }}</p>
+                        </div>
                     </div>
-                    <div class="item-description">
-                        <h2>
-                            {{ item.name }}
-                        </h2>
-                        <p>n°{{ item.id }}</p>
-                    </div>
+                </a>
+                <div class="action">
+                    <button class="btn-Ajouter" onclick="location.href='/cart/add/{{ item.id }}'">Ajouter</button>
                 </div>
-            </a>
-            <div class="action">
-                <button class="btn-Ajouter" onclick="location.href='/cart/add/{{ item.id }}'">Ajouter</button>
             </div>
-        </div>
         {% endfor %}
     </div>
 {% endif %}
@@ -64,8 +64,8 @@
             <div class="case">
             <a href="/item/{{ item.id }}">
                 <div class="item">
-                    <div class="item-image">
-                        <img src="{{ item.category.image }}" alt="{{ item.category.name }}">
+                    <div class="item-image image">
+                        <img height="180" width="180" src="data:image/png;base64,{{ item.image }}" alt="{{ item.category.name }}">
                     </div>
                     <div class="item-description">
                         <h2>
