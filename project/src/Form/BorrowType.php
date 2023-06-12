@@ -44,6 +44,21 @@ class BorrowType extends AbstractType
                     return $user->getEmail();
                 }
             ])
+            ->add('projectManager', EntityType::class, [
+                'label'=>"Email du chef de projet",
+                'class' => User::class,
+                'required' => true,
+                "placeholder" => "Choisissez un utilisateur",
+                // sort stakeholder by alphabetical order
+                'query_builder' => function (EntityRepository $repository) {
+                    return $repository->createQueryBuilder('user')
+                        ->select('user')
+                        ->orderBy('user.email', 'ASC');
+                },
+                'choice_label' => function (User $user) {
+                    return $user->getEmail();
+                }
+            ])
         ;
     }
 

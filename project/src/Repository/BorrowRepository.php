@@ -40,6 +40,24 @@ class BorrowRepository extends ServiceEntityRepository
         }
     }
 
+    public function findItems(): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            "SELECT it
+            FROM App\Entity\Item it
+            WHERE it.id IN (
+                SELECT i.id
+                FROM App\Entity\ItemBorrow ib
+                LEFT JOIN ib.item i
+                LEFT JOIN ib.borrow b
+            )"
+        );
+
+        return $query->getResult();
+    }
+
 //    /**
 //     * @return Borrow[] Returns an array of Borrow objects
 //     */

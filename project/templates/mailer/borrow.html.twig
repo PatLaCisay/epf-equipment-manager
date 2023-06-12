@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>[NE PAS REPONDRE] Demande d'emprunt d'articles n°{{ borrow.id }} - {{pm.firstName}} {{pm.lastName}}</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h2>Demande d'emprunt d'articles d'ingénierie à des fins de travaux pratiques</h2>
+    <p>Cher(e) {{ stakeHolder.firstName }} {{ stakeHolder.lastName }},</p>
+    
+    <p>Le groupe de {{pm.firstName}} {{pm.lastName}} solicite l'empunt du matériel suivant :</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Article</th>
+                <th>Quantité</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.stock }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <h2>Période de l'emprunt</h2>
+    <ul>
+        <li>Date d'emprunt : {{borrow.startDate|date("d/m/Y")}}</li>
+        <li>Date de réstitution : {{borrow.endDate|date("d/m/Y")}}</li>
+    </ul>
+
+    <h2> Description de l'emprunt </h2>
+    <div>
+        {{borrow.description}}
+    </div>
+    
+    <p>Afin de valider ou de réfuter la génération de cet emprunt merci de vous rendre sur l'application EPF Manager.</p>
+    
+    <p>Cet email a été autogénéré par l'application EPF Manager, il est possible qu'il s'affiche mal ou soit incohérent. Veuillez ne pas y répondre.</p>
+</body>
+
+</html>
