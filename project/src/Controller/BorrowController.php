@@ -20,8 +20,14 @@ class BorrowController extends AbstractController
     #[Route('/borrow', name: 'app_borrow')]
     public function index(): Response
     {
-        return $this->render('borrow/index.html.twig', [
-            'controller_name' => 'BorrowController',
+        return $this->render('borrow/index.html.twig');
+    }
+    
+    #[Route('/borrow/view/{id}', name: 'app_borrow_view')]
+    public function view(Borrow $borrow): Response
+    {
+        return $this->render('borrow/view.html.twig',[
+            'borrow'=>$borrow
         ]);
     }
 
@@ -62,7 +68,7 @@ class BorrowController extends AbstractController
             
             $doctrine->getManager()->flush();
 
-            return $this->redirectToRoute('app_borrow');
+            return $this->redirectToRoute("app_borrow_mail", ["id"=>$borrow->getId()]);
         }
 
         return $this->render('borrow/add.html.twig', [
