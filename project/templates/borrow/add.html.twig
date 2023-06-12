@@ -1,27 +1,32 @@
-{% extends 'base.html.twig' %} 
-{% block title %}Créer un emprunt{% endblock %}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}G&eacute;n&eacute;rer votre emprunt !{% endblock %}
 
 {% block body %}
-
+<h1>G&eacute;n&eacute;rer votre emprunt</h1>
 <div class="container">
-    <h1>Créer un emprunt</h1>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
         
-        <table>
+        <table class="table table-striped">
+            <h4>R&eacute;sum&eacute; de votre emprunt</h4>
             <tbody>
-                <tr>Image</tr>
-                <tr>Objet</tr>
-                <tr>Quantité</tr>
-                <tr></tr>
-
+                <tr>
+                    <th>Image</th>
+                    <th>Objet</th>
+                    <th>Quantit&eacute;</th>
+                    <th></th>
+                </tr>
+                <tr>
                 {% for element in items %}
-                    <td>{{element.item.image}}</td>
+                    <td><img width="200" height="150" class="image" src="data:image/png;base64,{{element.item.image}}" ></td>
                     <td>{{element.item.name}}</td>
-                    <td>{{element.quantity}}
-                        <a href="{{path('app_cart_add', {id: element.item.id})}}">Ajouter</a>
-                        <a href="{{path('app_cart_remove', {id: element.item.id})}}">Retirer</a>
+                    <td>
+                        <a href="{{path('app_cart_remove', {id: element.item.id})}}">-</a>
+                        {{element.quantity}}
+                        <a href="{{path('app_cart_add', {id: element.item.id})}}">+</a>
                     </td>
                     <td>
                         <a href="{{path('app_cart_delete', {id: element.item.id})}}">Supprimer</a>
@@ -29,6 +34,7 @@
                 {% else %}
                     <h3>Votre panier est vide </h3>
                 {% endfor %}
+                </tr>
             </tbody>
 
         </table>
