@@ -22,6 +22,14 @@ class BorrowController extends AbstractController
     {
         return $this->render('borrow/index.html.twig');
     }
+    
+    #[Route('/borrow/view/{id}', name: 'app_borrow_view')]
+    public function view(Borrow $borrow): Response
+    {
+        return $this->render('borrow/view.html.twig',[
+            'borrow'=>$borrow
+        ]);
+    }
 
     #[Route('/borrow/add', name: 'app_add_borrow')]
     public function add(Request $request, ManagerRegistry $doctrine, SessionInterface $session, ItemRepository $itemRepo, ItemBorrowRepository $itemBorrowRepo): Response

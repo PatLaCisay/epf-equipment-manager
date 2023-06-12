@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Refus et suppression de l'emprunt n°{{borrow.id}}{% endblock %}
+
+{% block body %}
+
+
+<div class="container">
+    <div>
+        <h1>Expliquez les raisons pour lesquelles vous refusez cet emprunt :</h1>
+    </div>
+    <div>
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
+    <div>
+        <h3><strong>Attention</strong> cette action est irréversible, si vous ne voulez plus supprimer cet emprunt, cliquez sur "Retour".</h3>
+    </div>
+</div>
+
+
+{% endblock %}

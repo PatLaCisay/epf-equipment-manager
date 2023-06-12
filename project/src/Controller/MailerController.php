@@ -43,7 +43,7 @@ class MailerController extends AbstractController
         $sender_email = $_ENV["EMAIL_ADDRESS"];
 
         $emailContent = $twig->render('mailer/borrow.html.twig', [
-            'stakeHolder' => $borrow->getStakeholder(),
+            'stakeholder' => $borrow->getStakeholder(),
             'pm' => $borrow->getProjectManager(),
             'borrow' => $borrow,
             'items' => $repo->findItems()
@@ -52,9 +52,35 @@ class MailerController extends AbstractController
         $email = (new Email())
             ->from($sender_email)
             ->to($borrow->getStakeholder()->getEmail())
+            ->subject("[NO-REPLY] Demande d'emprunt d'articles n°". $borrow->getId()." - ".$borrow->getProjectManager()->getFirstName()." ".$borrow->getProjectManager()->getLastName())
             ->html($emailContent);
         $mailer->send($email);
 
         return $this->redirectToRoute("app_borrow");
+    }
+
+    #[Route('/mail/revoke/borrow/{id}', name: 'app_borrow_mail')]
+    public function revokeBorrow(MailerInterface $mailer, Borrow $borrow, Environment $twig, ManagerRegistry $doctrine ): Response
+    {
+        
+        $sender_email = $_ENV["EMAIL_ADDRESS"];
+
+        $emailContent = $twig->render('mailer/borrowRevoke.html.twig', [
+            'stakeholder' => $borrow->getStakeholder(),
+            'pm' => $borrow->getProjectManager(),
+            'borrow' => $borrow
+        ]);
+
+        $email = (new Email())
+            ->from($sender_email)
+            ->to($borrow->getProjectManager()->getEmail())
+            ->subject('Votre emprunt a été refusé par '.$borrow->getStakeholder()->getFirstName().' '.$borrow->getStakeholder()->getLastName().'.')
+            ->html($emailContent);
+        $mailer->send($email);
+
+        $borrow->setAccepted(false);
+        $doctrine->getManager()->flush();
+
+        return $this->redirectToRoute("app_admin");
     }
 }

@@ -48,6 +48,9 @@ class Borrow
     #[ORM\JoinColumn(nullable: false)]
     private ?User $projectManager = null;
 
+    #[ORM\Column(type: 'boolean')]
+    private ?bool $accepted = false;
+
     public function __construct()
     {
         $this->item = new ArrayCollection();
@@ -168,6 +171,18 @@ class Borrow
     public function setProjectManager(?User $projectManager): self
     {
         $this->projectManager = $projectManager;
+
+        return $this;
+    }
+
+    public function isAccepted(): ?bool
+    {
+        return $this->accepted;
+    }
+
+    public function setAccepted(bool $accepted): self
+    {
+        $this->accepted = $accepted;
 
         return $this;
     }

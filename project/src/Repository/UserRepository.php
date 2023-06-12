@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use App\Entity\Group;
 use Doctrine\ORM\Query\QueryException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
@@ -44,6 +43,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         }
     }
 
+    public function findOpenedBorrows($user): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql =  'SELECT *
+                FROM `borrow`
+                WHERE `borrow`.`project_manager_id` = :userId';
+
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(array('userId'=>$user->getId()));
+
+        return $resultSet->fetchAllAssociative();
+    }
+
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
      */
@@ -58,37 +70,27 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->save($user, true);
     }
 
-    public function findGroups(User $user): array
-    {
-        $conn = $this->getEntityManager()->getConnection();
-        $sql =  'SELECT * FROM `group`
-                INNER JOIN `group_user` ON `group`.`id` = `group_user`.`group_id`
-                INNER JOIN `user` ON `group_user`.`user_id` = `user`.`id`
-                WHERE `user`.`id` = :userId';
-
-        $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery(array('userId'=>$user->getId()));
-        
-        return $resultSet->fetchAllAssociative();
-    }
-
     public function isDeletable(User $user){
 
-        if (in_array("ROLE_ADMIN", $user->getRoles())){
+        if (in_array("ROLE_ADMIN", $user->getRoles()) || count($this->findOpenedBorrows($user))>0){
             return false;
+        }else{
+            return true;
         }
-
-        $groupRepo=$this->getEntityManager()->getRepository(Group::class);
-        $groups = $this->findGroups($user);
-
-        if (count($groups) > 0){
-            foreach($groups as $group){
-                if (count($groupRepo->findOpenedBorrows($groupRepo->find($group["group_id"])))>0){
-                    return false;
-                }
-            }
-        }   
-        return true;
+    }
+    public function findPendingBorrows(User $user){
+        if(in_array("ROLE_ADMIN", $user->getRoles())){
+            $entityManager = $this->getEntityManager();
+            $query = $entityManager->createQuery('
+                SELECT b
+                FROM App\Entity\Borrow b
+                WHERE b.accepted = 0 AND b.stakeholder = :userId
+            ');
+            $query->setParameter('userId', $user->getId());
+            
+            return $query->getResult();
+        }
+        return [];
     }
 
 //    /**
