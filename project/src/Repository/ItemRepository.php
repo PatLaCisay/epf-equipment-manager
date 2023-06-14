@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Item;
+use App\Form\CategoryType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -168,6 +170,41 @@ class ItemRepository extends ServiceEntityRepository
         )->setParameter("id", $id);
 
         return $query->getResult();
+    }
+
+
+    public function getDataSet($cateRepo){
+        
+        $entityManager = $this->getEntityManager();
+
+
+        $categories = $cateRepo->findAll();
+        $datas=[];
+        $dataset=[];
+
+        foreach($categories as $category){
+            $query = $entityManager->createQuery(
+                "SELECT i
+                FROM App\Entity\Item i
+                WHERE i.category = :id"
+            )->setParameter("id", $category->getId());
+
+            $datas = $query->getResult();
+
+            $sum = 0;
+
+            foreach($datas as $data){
+                $sum+= $data->getStock();
+            }
+            $dataset[]=[
+                'category' => $category->getName(),
+                'quantity' => $sum
+
+            ];
+        }
+
+        return $dataset;
+
     }
 
 //    /**

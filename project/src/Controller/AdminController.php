@@ -7,6 +7,8 @@ use App\Entity\Item;
 use App\Form\ExcelType;
 use App\Repository\UserRepository;
 use App\Repository\BorrowRepository;
+use App\Repository\CategoryRepository;
+use App\Repository\ItemRepository;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,14 +21,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminController extends AbstractController
 {
     #[Route('/admin', name: 'app_admin')]
-    public function index(UserRepository $userRepo): Response
+    public function index(UserRepository $userRepo, CategoryRepository $cateRepo, ItemRepository $itemRepo): Response
     {
-        $userId = $userRepo->find(1);
+        $userId = $userRepo->find(67);
         $pendingBorrows = $userRepo->findPendingBorrows($userId);
 
+        $dataSet = $itemRepo->getDataSet($cateRepo);
 
         return $this->render('admin/index.html.twig', [
             'pendingBorrows' => $pendingBorrows,
+            'dataSet' => json_encode($dataSet)
         ]);
     }
 
@@ -71,9 +75,14 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/import/items', name: 'app_admin_import_items')]
-    public function importItems(Request $request, ManagerRegistry $doctrine): Response
+    #[Route('/admin/items', name: 'app_admin_import_items')]
+    public function importItems(Request $request, ManagerRegistry $doctrine, ItemRepository $itemRepo): Response
     {
+        $items = $itemRepo->findBy(    
+            [],
+            array('stock' => 'ASC')
+        );
+
         $entityManager = $doctrine->getManager();
         $form = $this->createForm(ExcelType::class);
         $form->handleRequest($request);
@@ -104,8 +113,9 @@ class AdminController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->render('admin/import_items.html.twig', [
+        return $this->render('admin/items.html.twig', [
             'form' => $form->createView(),
+            'items' => $items
         ]);
     }
 
