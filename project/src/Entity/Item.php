@@ -28,7 +28,7 @@ class Item
     private ?Category $category;
 
     #[ORM\Column(type: Types::BLOB, nullable: true)]
-    private $image = null;
+    private $image = 1;
 
     #[ORM\Column]
     private ?float $price = null;

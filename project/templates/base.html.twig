@@ -28,7 +28,14 @@
                             <img class="icon" src="{{ asset('img/search.svg') }}" alt="Rechercher">
                         </button>
                 </form>
-                <a href="/login/" class="login-btn">S'identifier</a>
+                
+                {% if app.user %}
+                    <a href="/" class="login-btn">Mon compte (app.user.userIdentifier)</a>
+                    <a href="{{ path('app_logout') }}" class="login-btn">Déconnexion</a>
+                {% else %}
+                    <a href="/login/" class="login-btn">S'identifier</a>
+                {% endif %}
+                
                 <a href="/cart/" class="cart-button" data-count="{{ app.session.get('cart') | length }}">Panier</a>
             </div>
         </div>
