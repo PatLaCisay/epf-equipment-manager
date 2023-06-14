@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Borrow;
+use App\Entity\Item;
+use App\Form\ExcelType;
 use App\Repository\UserRepository;
 use App\Repository\BorrowRepository;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +21,7 @@ class AdminController extends AbstractController
     #[Route('/admin', name: 'app_admin')]
     public function index(UserRepository $userRepo): Response
     {
-        $userId = $userRepo->find(948653);
+        $userId = $userRepo->find(1);
         $pendingBorrows = $userRepo->findPendingBorrows($userId);
 
 
@@ -65,6 +68,44 @@ class AdminController extends AbstractController
         return $this->render('admin/borrowRevoke.html.twig', [
             'form' => $form->createView(),
             'borrow' => $borrow
+        ]);
+    }
+
+    #[Route('/admin/import/items', name: 'app_admin_import_items')]
+    public function importItems(Request $request, ManagerRegistry $doctrine): Response
+    {
+        $entityManager = $doctrine->getManager();
+        $form = $this->createForm(ExcelType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+
+            $file = $form->get('file')->getData();
+            $spreadsheet = IOFactory::load($file->getPathname());
+            
+            $worksheet = $spreadsheet->getActiveSheet();
+            $highestRow = $worksheet->getHighestRow();
+
+            for ($row = 2; $row <= $highestRow; $row++) {
+                $item = new Item();
+                $item
+                    ->setName($worksheet->getCell('A' . $row)->getValue())
+                    ->setPrice((float)$worksheet->getCell('B' . $row)->getValue())
+                    ->setStock((integer)$worksheet->getCell('C' . $row)->getValue())
+                    ->setCategory($form->get('category')->getData())
+                    ->setDefaultImage()
+                    ;
+                
+                
+                $entityManager->persist($item);
+            }
+
+            // Flush all changes to the database
+            $entityManager->flush();
+        }
+
+        return $this->render('admin/import_items.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 

@@ -31,16 +31,11 @@ class Category
     #[ORM\Column(type: 'text', nullable: true)]
     private $description;
 
-    #[ORM\Column(type: 'float')]
-    #[Assert\Positive]
-    private $price;
-
     #[ORM\Column(type: 'integer', nullable: true)]
     #[Assert\PositiveOrZero]
     private $stock;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Item::class)]
-    #[Assert\Unique]
     #[Assert\All([
         new Assert\NotNull,
     ])]
@@ -93,18 +88,6 @@ class Category
     public function setDescription(?string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getPrice(): ?float
-    {
-        return $this->price;
-    }
-
-    public function setPrice(float $price): self
-    {
-        $this->price = $price;
 
         return $this;
     }

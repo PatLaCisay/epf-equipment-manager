@@ -2,12 +2,17 @@
 
 namespace App\Entity;
 
-use App\Repository\ItemRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ItemRepository;
+use Symfony\Component\Asset\Package;
+use Symfony\Config\Framework\AssetsConfig;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Asset\VersionStrategy\StaticVersionStrategy;
 
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
 class Item
@@ -28,7 +33,7 @@ class Item
     private ?Category $category;
 
     #[ORM\Column(type: Types::BLOB, nullable: true)]
-    private $image = null;
+    private $image = 1;
 
     #[ORM\Column]
     private ?float $price = null;
@@ -115,6 +120,12 @@ class Item
         $this->stock = $stock;
 
         return $this;
+    }
+
+    public function setDefaultImage()
+    {
+        $this->image=file_get_contents(join(DIRECTORY_SEPARATOR, array("public", "img", "default-placeholder.png")));
+
     }
 
 }
