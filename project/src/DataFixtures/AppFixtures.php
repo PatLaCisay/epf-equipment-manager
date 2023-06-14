@@ -28,8 +28,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 4; $i++) {
             $categories[$i] = new Category();
             $categories[$i]->setName($faker->word)
-                ->setDescription($faker->word)//Lorem.php bugs so we create a single word for description
-                ->setStock($faker->numberBetween($min = 1, $max = 200));
+                ->setDescription($faker->word);//Lorem.php bugs so we create a single word for description
             $entityManager->persist($categories[$i]);
         }
 
@@ -42,7 +41,7 @@ class AppFixtures extends Fixture
             ->setPrice($faker->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = NULL))
             ->setCategory($categories[$i%count($categories)])
             ->setStock($faker->numberBetween($min = 1, $max = 200))
-            ->setImage($faker->image($width = 200, $height = 200));
+            ->setImage("6513"); //random bulshit
             $entityManager->persist($items[$i]);
         }
 

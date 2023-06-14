@@ -28,7 +28,7 @@ class AdminController extends AbstractController
     #[Route('/admin', name: 'app_admin')]
     public function index(UserRepository $userRepo, CategoryRepository $cateRepo, ItemRepository $itemRepo): Response
     {
-        $userId = $userRepo->find(67);
+        $userId = $userRepo->find(1);
         $pendingBorrows = $userRepo->findPendingBorrows($userId);
 
         $dataSet = $itemRepo->getDataSet($cateRepo);

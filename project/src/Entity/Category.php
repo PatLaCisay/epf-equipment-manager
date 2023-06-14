@@ -23,17 +23,8 @@ class Category
     #[Assert\Length(min: 2, max: 255)]
     private $name;
 
-    #[ORM\Column(type: 'blob', nullable: true)]
-    #[Assert\Image]
-    #[Assert\NotBlank]
-    private $image;
-
     #[ORM\Column(type: 'text', nullable: true)]
     private $description;
-
-    #[ORM\Column(type: 'integer', nullable: true)]
-    #[Assert\PositiveOrZero]
-    private $stock;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Item::class)]
     #[Assert\All([
@@ -68,18 +59,6 @@ class Category
         return $this;
     }
 
-    public function getImage()
-    {
-        return base64_encode(stream_get_contents($this->image));
-    }
-
-    public function setImage($image): self
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
@@ -88,18 +67,6 @@ class Category
     public function setDescription(?string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getStock(): ?int
-    {
-        return $this->stock;
-    }
-
-    public function setStock(?int $stock): self
-    {
-        $this->stock = $stock;
 
         return $this;
     }
