@@ -193,7 +193,16 @@ tr:nth-child(even) {
     object-fit: cover;
 }
 
-/* Autres styles pour conserver la barre de recherche inchangée */
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
 .form-control {
     width: 100%;
     padding: 10px;

@@ -12,7 +12,7 @@
     <h1>Attention</h1>
     {{message}}
     {{ form_start(form) }}
-
+        {{form_widget(form, {'attr': {'class': 'form-control'}})}}
     {{ form_end(form) }}
 </div>
 {% endblock %}

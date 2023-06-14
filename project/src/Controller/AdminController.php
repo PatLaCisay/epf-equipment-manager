@@ -35,7 +35,8 @@ class AdminController extends AbstractController
 
         return $this->render('admin/index.html.twig', [
             'pendingBorrows' => $pendingBorrows,
-            'dataSet' => json_encode($dataSet)
+            'dataSetJson' => json_encode($dataSet),
+            'dataSet' => $dataSet
         ]);
     }
 
