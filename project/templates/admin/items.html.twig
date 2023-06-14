@@ -30,8 +30,7 @@
                     <td>
                     {% endif %}    
                         {{item.stock}}
-                        <a href="{{path('app_cart_add', {id: item.id})}}">Ajouter</a>
-                        <a href="{{path('app_cart_remove', {id: item.id})}}">Retirer</a>
+                        <a href="{{path('app_admin_items_quantity', {id: item.id})}}">Modifier</a>
                     </td>
                     <td>
                         <a href="{{path('app_cart_delete', {id: item.id})}}">Supprimer</a>

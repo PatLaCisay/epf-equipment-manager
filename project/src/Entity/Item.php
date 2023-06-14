@@ -122,9 +122,9 @@ class Item
         return $this;
     }
 
-    public function setDefaultImage()
+    public function setDefaultImage($kdir)
     {
-        $this->image=file_get_contents(join(DIRECTORY_SEPARATOR, array("public", "img", "default-placeholder.png")));
+        $this->image=file_get_contents(join(DIRECTORY_SEPARATOR, array($kdir,"public", "img", "default-placeholder.png")));
 
     }
 

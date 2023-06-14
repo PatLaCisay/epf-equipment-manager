@@ -2,13 +2,17 @@
 
 namespace App\Controller;
 
-use App\Entity\Borrow;
 use App\Entity\Item;
+use App\Entity\Borrow;
+use App\Form\ItemType;
 use App\Form\ExcelType;
+use App\Form\ImageType;
+use App\Form\BorrowType;
+use App\Entity\ItemBorrow;
+use App\Repository\ItemRepository;
 use App\Repository\UserRepository;
 use App\Repository\BorrowRepository;
 use App\Repository\CategoryRepository;
-use App\Repository\ItemRepository;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 class AdminController extends AbstractController
 {
@@ -75,7 +80,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/items', name: 'app_admin_import_items')]
+    #[Route('/admin/items', name: 'app_admin_items')]
     public function importItems(Request $request, ManagerRegistry $doctrine, ItemRepository $itemRepo): Response
     {
         $items = $itemRepo->findBy(    
@@ -102,14 +107,12 @@ class AdminController extends AbstractController
                     ->setPrice((float)$worksheet->getCell('B' . $row)->getValue())
                     ->setStock((integer)$worksheet->getCell('C' . $row)->getValue())
                     ->setCategory($form->get('category')->getData())
-                    ->setDefaultImage()
+                    ->setDefaultImage($this->getParameter('kernel.project_dir'))
                     ;
                 
                 
                 $entityManager->persist($item);
             }
-
-            // Flush all changes to the database
             $entityManager->flush();
         }
 
@@ -118,5 +121,37 @@ class AdminController extends AbstractController
             'items' => $items
         ]);
     }
+    
+    #[Route('/admin/items/quantity/{id}', name: 'app_admin_items_quantity')]
+    public function quantityItems(Request $request, ManagerRegistry $doctrine, Item $item): Response
+    {
+        $form = $this->createForm(ItemType::class, $item);
+        $imageForm =  $this->createForm(ImageType::class);
 
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {          
+            $doctrine->getManager()->flush();
+            return $this->redirectToRoute('app_admin_items');
+        }
+
+        if ($imageForm->isSubmitted()) {          
+            
+            $image = $form->get('image')->getData();
+            $imageData = file_get_contents($image);
+
+            $item->setImage($imageData);
+
+            $doctrine->getManager()->flush();
+
+            return $this->redirectToRoute('app_admin_items');
+        }
+        
+        return $this->render( "admin/items_modify.html.twig",[
+            'item'=>$item,
+            'form'=>$form->createView(),
+            'imageForm'=>$imageForm->createView()
+        ]);
+        
+    }
 }
