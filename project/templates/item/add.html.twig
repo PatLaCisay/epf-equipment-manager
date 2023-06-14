@@ -7,7 +7,7 @@
 <h1>Ajout d'élément</h1>
 <div class="container">
     {{ form_start(form) }}
-        {{ form_widget(form) }}
+        {{ form_widget(form, {'attr': {'class': 'form-control'}}) }}
         <input type="submit">
     {{ form_end(form) }}
 </div>

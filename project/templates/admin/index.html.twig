@@ -3,7 +3,7 @@
 {% block title %}Administration du site{% endblock %}
 
 {% block body %}  
-    <body onload="itemsGraph('{{dataSet}}')">
+    <body onload="itemsGraph('{{dataSetJson}}')">
     <h1>Emprunt(s) requiérant(s) votre validation :</h1>
     <div class="container">
             <table class="table table-striped">
@@ -57,6 +57,27 @@
         </div>
         <div>
             <canvas id="items_graph" width="400" height="200"></canvas>
+        </div>
+        <div>
+            <table class="table-stripped">
+                <thead>
+                <tr>
+                    <th>Catégorie</th>
+                    <th>Nombre total d'éléments</th>
+                    <th>Nombre de type d'éléments</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for data in dataSet %}
+                        <tr>
+                            <td>{{data.category}}</td>
+                            <td>{{data.quantity}}</td>
+                            <td>{{data.diffObj}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
         </div>
 
     </div>

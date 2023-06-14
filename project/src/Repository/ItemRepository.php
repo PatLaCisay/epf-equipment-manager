@@ -198,7 +198,8 @@ class ItemRepository extends ServiceEntityRepository
             }
             $dataset[]=[
                 'category' => $category->getName(),
-                'quantity' => $sum
+                'quantity' => $sum,
+                'diffObj' => count($datas)
 
             ];
         }
