@@ -13,11 +13,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UserController extends AbstractController
 {
-    #[Route('/user', name: 'app_user')]
-    public function index(): Response
+    #[Route('/user/{id}', name: 'app_user')]
+    public function index(User $user): Response
     {
+        $borrows = $user->getBorrows();
         return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
+            'user' => $user,
+            'borrows' => $borrows,
         ]);
     }
 
