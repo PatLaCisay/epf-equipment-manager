@@ -1,0 +1,81 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration du site{% endblock %}
+
+{% block body %}
+
+    <h1>Modifier des items</h1>
+
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Image</th>
+                    <th>Objet</th>
+                    <th>Quantité</th>
+                    <th>Supprimer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                {% for item in items %}
+                    <td>{{item.id}}</td>
+                    <td><img class="image" width="200" height="150" src="data:image/png;base64,{{item.image}}" alt="{{item.name}}"></td>
+                    <td>{{item.name}}</td>
+                    {% if item.stock <=5 %}
+                    <td style="background : rgba(255,0,0,0.5);">
+                    {% else %}
+                    <td>
+                    {% endif %}    
+                        {{item.stock}}
+                        <a href="{{path('app_admin_items_quantity', {id: item.id})}}">Modifier</a>
+                    </td>
+                    <td>
+                        <a href="{{path('app_cart_delete', {id: item.id})}}">Supprimer</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <h1>Importer des données via Excel</h1>
+    <div class="container">
+        <div>
+            {{ form_start(form) }}
+
+            {{ form_end(form) }}
+        </div>
+        <div>
+            <div>
+                <p>Pour importer des items veuillez copier/coller ce template dans un Excel et remplir les infomrations requises.</p>
+            </div>
+            <div>
+                <table class="table-stripped">
+                    <tr>
+                        <th>Nom de l'objet</th>
+                        <th>Prix unitaire</th>
+                        <th>Quantité</th>
+                    </tr>
+                    <tr>
+                        <td>Exemple</td>
+                        <td>4.5</td>
+                        <td>12</td>
+                    </tr>
+                                        <tr>
+                        <td>Exemple2</td>
+                        <td>4.5</td>
+                        <td>122</td>
+                    </tr>
+                    <tr>
+                        <td>Exemple3</td>
+                        <td>1.2</td>
+                        <td>4</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

@@ -42,14 +42,13 @@ $ php bin/console doctrine:mapping:info
 ```
 Vous devriez avoir affiché le mapping suivant :
 ```sh
- Found 6 mapped entities:
+ Found 5 mapped entities:
 
  [OK]   App\Entity\Borrow
- [OK]   App\Entity\Group
  [OK]   App\Entity\Item
- [OK]   App\Entity\Room
  [OK]   App\Entity\Category
  [OK]   App\Entity\User
+ [OK]   App\Entity\ItemBorrow
 
 ```
 Théoriquement, votre application tourne ici http://localhost:8741

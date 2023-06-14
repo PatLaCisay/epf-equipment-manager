@@ -31,6 +31,7 @@ class BorrowType extends AbstractType
             ])
             ->add('description', TextType::class, ['required' => true])
             ->add('stakeholder', EntityType::class, [
+                'label'=>"Email du responsable du materiel",
                 'class' => User::class,
                 'required' => true,
                 "placeholder" => "Choisissez un utilisateur",

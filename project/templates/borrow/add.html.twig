@@ -19,8 +19,9 @@
                     <th>Quantit&eacute;</th>
                     <th></th>
                 </tr>
-                <tr>
+                
                 {% for element in items %}
+                <tr>
                     <td><img width="200" height="150" class="image" src="data:image/png;base64,{{element.item.image}}" ></td>
                     <td>{{element.item.name}}</td>
                     <td>
@@ -31,10 +32,11 @@
                     <td>
                         <a href="{{path('app_cart_delete', {id: element.item.id})}}">Supprimer</a>
                     </td>
+                </tr>
                 {% else %}
                     <h3>Votre panier est vide </h3>
                 {% endfor %}
-                </tr>
+                
             </tbody>
 
         </table>

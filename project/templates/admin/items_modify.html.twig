@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier {{item.name}}{% endblock %}
+
+{% block body %}
+
+<h1>Modifier {{item.name}}</h1>
+<div class="container">
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
+</div>
+
+<h1>Modifier l'image de {{item.name}}</h1>
+<div class="container">
+    {{ form_start(imageForm) }}
+        {{ form_widget(imageForm) }}
+    {{ form_end(imageForm) }}
+</div>
+    
+
+{% endblock %}
