@@ -5,17 +5,24 @@ namespace App\Controller;
 use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+/**
+ *
+ * @IsGranted("ROLE_USER")
+ */
 
 class UserController extends AbstractController
 {
-    #[Route('/user/{id}', name: 'app_user')]
-    public function index(User $user): Response
+    #[Route('/user', name: 'app_user')]
+    public function index(Security $security): Response
     {
+        $user =  $security->getUser();
         $borrows = $user->getBorrows();
         return $this->render('user/index.html.twig', [
             'user' => $user,

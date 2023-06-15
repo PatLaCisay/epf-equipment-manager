@@ -30,8 +30,11 @@
                 </form>
                 
                 {% if app.user %}
-                    <a href="/" class="login-btn">Mon compte (app.user.userIdentifier)</a>
+                    <a href="/user" class="login-btn">Mon compte {{app.user.userIdentifier}}</a>
                     <a href="{{ path('app_logout') }}" class="login-btn">Déconnexion</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('app_admin') }}" class="login-btn">Administration</a>
+                    {% endif %}
                 {% else %}
                     <a href="/login/" class="login-btn">S'identifier</a>
                 {% endif %}

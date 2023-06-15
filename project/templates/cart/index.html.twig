@@ -23,7 +23,7 @@
             <tbody>
                 <tr>
                 {% for element in items %}
-                    <td><img class="image" width="200" height="150" src="data:image/png;base64,{{element.item.image}}" alt="{{element.item.name}}"></td>
+                    <td><img src="https://picsum.photos/200/200" alt="image">{# <img class="image" width="200" height="150" src="data:image/png;base64,{{element.item.image}}" alt="{{element.item.name}}">#}</td>
                     <td>{{element.item.name}}</td>
                     <td>
                         {{element.quantity}}
@@ -37,10 +37,11 @@
                 {% endfor %}
             </tbody>
         </table>
-
-        <button class="btn btn-lg btn-primary" href="{{path('app_add_borrow')}}">
-            Valider mon emprunt
-        </button>
+        <a href="{{path('app_add_borrow')}}">
+            <button class="btn btn-lg btn-primary" href="{{path('app_add_borrow')}}">
+                Valider mon emprunt
+            </button>
+        </a>
     {% endif %}
 
 </div>

@@ -8,11 +8,6 @@
 
 
 <div class="container">
-    <h1>email: {{ user.email }}</h1>
-    <button type="button" class="btn btn-primary" id="myButton">Modifier mon mot de passe</button>
-</div>
-
-<div class="container">
     <table class="table table-striped">
         <thead>
             <tr>
@@ -40,14 +35,23 @@
                 <td>{{ borrow.startDate|date("d/m/Y")}}</td>                
                 <td>{{ borrow.endDate|date("d/m/Y") }}</td>    
             </tr>
+            {% else %}
+            <tr>
+                <td><strong>Aucun emprunt réalisé.</strong></td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
 
-<div class="container">
+<div class="container-form">
     <a href="/user/delete/{{user.id}}">
         <button type="button" class="btn btn-primary" id="myButton">Supprimer mon compte</button>
+    </a>
+    <br>
+    <br>
+    <a>
+        <button type="button" class="btn btn-primary" id="myButton">Modifier mon mot de passe</button>
     </a>
 </div>
 {% endblock %}

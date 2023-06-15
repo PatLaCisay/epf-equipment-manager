@@ -14,6 +14,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+/**
+ *
+ * @IsGranted("IS_AUTHENTICATED_FULLY")
+ */
 
 class BorrowController extends AbstractController
 {
@@ -67,7 +73,7 @@ class BorrowController extends AbstractController
             $repo->add($borrow, true);
             
             $doctrine->getManager()->flush();
-
+            $session->set("cart",[]);
             return $this->redirectToRoute("app_borrow_mail", ["id"=>$borrow->getId()]);
         }
 

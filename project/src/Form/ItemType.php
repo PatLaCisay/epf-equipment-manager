@@ -19,10 +19,16 @@ class ItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class,['required' => true])
-            ->add('category', TextType::class,['required' => true])
-            ->add('stock', NumberType::class)
-            ->add('price', NumberType::class)          
+            ->add('name', TextType::class,[
+                'required' => true,
+                'label' => 'Nom'
+            ])
+            ->add('stock', NumberType::class,[
+                'label' => "Quantité"
+            ])
+            ->add('price', NumberType::class,[
+                'label'=>'Prix unitaire'
+            ])          
             ->add('category', EntityType::class, [
                 'label'=>"Choisir la catégorie des éléments que vous allez créer",
                 'class' => Category::class,
