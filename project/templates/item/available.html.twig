@@ -1,16 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Available items{% endblock %}
+{% block title %}Articles disponibles{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Available items</h1>
-
+<h1>Articles disponibles</h1>
+<div class="container">
     {% if available_items is defined %}
         {% if available_items|length == 0 %}
         <p>Aucun item n'est disponible pour le moment.</p>
@@ -18,4 +13,5 @@
     {{ include('item/_item_list.html.twig', {items_list: available_items}) }}
     {% endif %}
 </div>
+
 {% endblock %}

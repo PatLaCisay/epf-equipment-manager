@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Item;
+use App\Form\CategoryType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -116,14 +118,94 @@ class ItemRepository extends ServiceEntityRepository
             FROM App\Entity\Item it
             WHERE it.id NOT IN (
                 SELECT i.id
-                FROM App\Entity\Item i
-                LEFT JOIN i.borrow b
+                FROM App\Entity\ItemBorrow ib
+                LEFT JOIN ib.item i
+                LEFT JOIN ib.borrow b
                 WHERE b.startDate <= CURRENT_DATE()
                 AND b.endDate >= CURRENT_DATE()
             )"
         );
 
         return $query->getResult();
+    }
+
+    /**
+     * Finds all items that are borrowed at the time of request.
+     *
+     * @return array An array of rented items
+     */
+    public function findRentedNow(): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            "SELECT it
+            FROM App\Entity\Item it
+            WHERE it.id IN (
+                SELECT i.id
+                FROM App\Entity\ItemBorrow ib
+                LEFT JOIN ib.item i
+                LEFT JOIN ib.borrow b
+                WHERE b.startDate <= CURRENT_DATE()
+                AND b.endDate >= CURRENT_DATE()
+            )"
+        );
+
+        return $query->getResult();
+    }
+
+    /**
+     * Finds all items for a given category.
+     *
+     * @return array An array of items.
+     */
+    public function findByCategory(int $id): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            "SELECT i
+            FROM App\Entity\Item i
+            WHERE i.category = :id"
+        )->setParameter("id", $id);
+
+        return $query->getResult();
+    }
+
+
+    public function getDataSet($cateRepo){
+        
+        $entityManager = $this->getEntityManager();
+
+
+        $categories = $cateRepo->findAll();
+        $datas=[];
+        $dataset=[];
+
+        foreach($categories as $category){
+            $query = $entityManager->createQuery(
+                "SELECT i
+                FROM App\Entity\Item i
+                WHERE i.category = :id"
+            )->setParameter("id", $category->getId());
+
+            $datas = $query->getResult();
+
+            $sum = 0;
+
+            foreach($datas as $data){
+                $sum+= $data->getStock();
+            }
+            $dataset[]=[
+                'category' => $category->getName(),
+                'quantity' => $sum,
+                'diffObj' => count($datas)
+
+            ];
+        }
+
+        return $dataset;
+
     }
 
 //    /**

@@ -41,18 +41,19 @@ class Borrow
     #[ORM\JoinColumn(nullable: false)]
     private User $stakeholder;
 
-    #[ORM\ManyToOne(inversedBy: 'borrows')]
-    private Room $room;
-
-    #[ORM\ManyToMany(targetEntity: Item::class, mappedBy: 'borrow')]
-    private Collection $items;
+    #[ORM\OneToMany(mappedBy: 'borrow', targetEntity: ItemBorrow::class)]
+    private Collection $item;
 
     #[ORM\ManyToOne(inversedBy: 'borrows')]
-    private Group $team;
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $projectManager = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private ?bool $accepted = false;
 
     public function __construct()
     {
-        $this->items = new ArrayCollection();
+        $this->item = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -132,54 +133,58 @@ class Borrow
         return $this;
     }
 
-    public function getRoom(): Room
-    {
-        return $this->room;
-    }
-
-    public function setRoom(Room $room): self
-    {
-        $this->room = $room;
-
-        return $this;
-    }
-
     /**
-     * @return Collection<int, Item>
+     * @return Collection<int, ItemBorrow>
      */
-    public function getItems(): Collection
+    public function getItem(): Collection
     {
-        return $this->items;
+        return $this->item;
     }
 
-    public function addItem(Item $item): self
+    public function addItem(ItemBorrow $item): self
     {
-        if (!$this->items->contains($item)) {
-            $this->items->add($item);
-            $item->addBorrow($this);
+        if (!$this->item->contains($item)) {
+            $this->item->add($item);
+            $item->setBorrow($this);
         }
 
         return $this;
     }
 
-    public function removeItem(Item $item): self
+    public function removeItem(ItemBorrow $item): self
     {
-        if ($this->items->removeElement($item)) {
-            $item->removeBorrow($this);
+        if ($this->item->removeElement($item)) {
+            // set the owning side to null (unless already changed)
+            if ($item->getBorrow() === $this) {
+                $item->setBorrow(null);
+            }
         }
 
         return $this;
     }
 
-    public function getTeam(): Group
+    public function getProjectManager(): ?User
     {
-        return $this->team;
+        return $this->projectManager;
     }
 
-    public function setTeam(Group $team): self
+    public function setProjectManager(?User $projectManager): self
     {
-        $this->team = $team;
+        $this->projectManager = $projectManager;
 
         return $this;
     }
+
+    public function isAccepted(): ?bool
+    {
+        return $this->accepted;
+    }
+
+    public function setAccepted(bool $accepted): self
+    {
+        $this->accepted = $accepted;
+
+        return $this;
+    }
+
 }

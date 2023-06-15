@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration du site{% endblock %}
+
+{% block body %}  
+    <body onload="itemsGraph('{{dataSetJson}}')">
+    <h1>Emprunt(s) requiérant(s) votre validation :</h1>
+    <div class="container">
+            <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Chef de projet</th>
+                <th>Responsable</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th></th>
+                <th></th>
+
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for borrow in pendingBorrows %}
+            <tr>
+                <td><a href="{{path('app_borrow_view', {id:borrow.id})}}">{{ borrow.id }}</a></td>
+                <td>{{ borrow.projectManager.lastName}} {{ borrow.projectManager.firstName}}</td>
+                <td>{{ borrow.stakeholder.lastName}} {{ borrow.stakeholder.firstName}}</td>
+                <td>{{ borrow.startDate|date("d/m/Y")}}</td>                
+                <td>{{ borrow.endDate|date("d/m/Y") }}</td>
+                <td>{{ borrow.description}}</td>    
+                <td>
+                    <a href="{{path('app_admin_validate_borrow', {id:borrow.id})}}">Autoriser</a>
+                </td>                
+                <td>
+                    <a href="{{path('app_admin_revoke_borrow', {id:borrow.id})}}">Révoquer</a>
+                </td>  
+            </tr>
+        {% else %}
+            <tr><td>Vous n'avez aucun emprunt à valider/refuser.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    </div>
+
+    <h1>Point de vue global des stocks par catégorie</h1>
+
+    <div class="container">
+        <div>
+            <div class="action">
+                <button class="btn-Ajouter" onclick="location.href='/admin/items'">Gérer les items</button>
+            </div>
+            <div class="action">
+                <button class="btn-Ajouter" onclick="location.href='/category/add'">Nouvelle catégorie</button>
+            </div>
+        </div>
+        <div>
+            <canvas id="items_graph" width="400" height="200"></canvas>
+        </div>
+        <div>
+            <table class="table-stripped">
+                <thead>
+                <tr>
+                    <th>Catégorie</th>
+                    <th>Nombre total d'éléments</th>
+                    <th>Nombre de type d'éléments</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for data in dataSet %}
+                        <tr>
+                            <td>{{data.category}}</td>
+                            <td>{{data.quantity}}</td>
+                            <td>{{data.diffObj}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+{% endblock %}

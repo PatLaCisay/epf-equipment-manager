@@ -23,24 +23,10 @@ class Category
     #[Assert\Length(min: 2, max: 255)]
     private $name;
 
-    #[ORM\Column(type: 'blob', nullable: true)]
-    #[Assert\Image]
-    #[Assert\NotBlank]
-    private $image;
-
     #[ORM\Column(type: 'text', nullable: true)]
     private $description;
 
-    #[ORM\Column(type: 'float')]
-    #[Assert\Positive]
-    private $price;
-
-    #[ORM\Column(type: 'integer', nullable: true)]
-    #[Assert\PositiveOrZero]
-    private $stock;
-
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Item::class)]
-    #[Assert\Unique]
     #[Assert\All([
         new Assert\NotNull,
     ])]
@@ -73,18 +59,6 @@ class Category
         return $this;
     }
 
-    public function getImage()
-    {
-        return $this->image;
-    }
-
-    public function setImage($image): self
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
@@ -93,30 +67,6 @@ class Category
     public function setDescription(?string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getPrice(): ?float
-    {
-        return $this->price;
-    }
-
-    public function setPrice(float $price): self
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
-    public function getStock(): ?int
-    {
-        return $this->stock;
-    }
-
-    public function setStock(?int $stock): self
-    {
-        $this->stock = $stock;
 
         return $this;
     }

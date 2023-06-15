@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>[NE PAS REPONDRE]Refus emprunt d'articles n°{{ borrow.id }} - {{pm.firstName}} {{pm.lastName}}</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h2>Refus d'emprunt d'articles d'ingénierie à des fins de travaux pratiques</h2>
+    <p>Cher(e) {{ pm.firstName }} {{ pm.lastName }},</p>
+    
+    <p>Votre emprunt a été refusé par {{ stakeholder.firstName }} {{ stakeholder.lastName }}.</p>
+
+    <h2>Causes :</h2>
+    <div>
+        {{borrow.description}}
+    </div>
+
+    <p>Veuillez modifier votre emprunt sur l'application EPF Manager ou en générer un nouveau.</p>
+    
+    <p>Cet email a été autogénéré par l'application EPF Manager, il est possible qu'il s'affiche mal ou soit incohérent. <strong>Veuillez ne pas y répondre</strong>.</p>
+</body>
+
+</html>

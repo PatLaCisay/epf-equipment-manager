@@ -10,49 +10,74 @@
     </span>
 </div>
 
-{# Available items Lorem ipsum #}
-<div id="disponible" class="container-items">
-    {% for i in range(0, 9) %}
-        <div class="case">
-        <a href="#">
-            <div class="item">
-                <div class="item-image">
-                    <img src="https://picsum.photos/200/200" alt="image">
-                </div>
-                <div class="item-description">
-                    <h2>
-                        Disponible
-                    </h2>
-                    <p>(Lorem Ipsum, lorme ipsum ...)</p>
-                </div>
-            </div>
+{# categorie selection section #}
+<nav class="category-wrapper">
+  <ul class="menu">
+    {% for category in categories %}
+      <li class="menu-item">
+        <a href="/search/?search={{ category.name }}">
+          <button class="category-button">{{ category.name }}</button>
         </a>
-        <div class="action">
-            <div href="#" class="btn-Ajouter">Ajouter</div>
-        </div>
-    </div>
+      </li>
     {% endfor %}
-</div>
+  </ul>
+</nav>
 
-{# Reserved items Loremipsum #}
-<div id="reserve" class="container-items" style="display: none;">
-    {% for i in range(0, 9) %}
-        <div class="case">
-        <a href="#">
-            <div class="item">
-                <div class="item-image">
-                    <img src="https://picsum.photos/200/300" alt="image">
-                </div>
-                <div class="item-description">
-                    <h2>
-                        Reservé
-                    </h2>
-                    <p>(Lorem Ipsum, lorme ipsum ...)</p>
+
+{# items section #}
+{% if available_items is defined %}
+    <div id="disponible" class="container-items">
+        {% if available_items|length == 0 %}
+        <p>Aucun item n'est disponible pour le moment.</p>
+        {% endif %}
+
+        {% for item in available_items %}
+            <div class="case">
+                <a href="/item/{{ item.id }}">
+                    <div class="item">
+                        <div class="item-image">
+                            <img src="https://picsum.photos/200/200" alt="image">{# <img src="data:image/png;base64,{{ item.image }}" alt="{{ item.name }}"> #}
+                        </div>
+                        <div class="item-description">
+                            <h2>
+                                {{ item.name }}
+                            </h2>
+                            <p>n°{{ item.id }}</p>
+                        </div>
+                    </div>
+                </a>
+                <div class="action">
+                    <button class="btn-Ajouter" onclick="location.href='/cart/add/{{ item.id }}'">Ajouter</button>
                 </div>
             </div>
-        </a>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
+{% endif %}
+
+{% if rented_items is defined %}
+    <div id="reserve" class="container-items" style="display: none;">
+        {% if rented_items|length == 0 %}
+        <p>Aucun item n'est reservé pour le moment.</p>
+        {% endif %}
+
+        {% for item in rented_items %}
+            <div class="case">
+            <a href="/item/{{ item.id }}">
+                <div class="item">
+                    <div class="item-image image">
+                            <img src="https://picsum.photos/200/200" alt="image">{# <img src="data:image/png;base64,{{ item.image }}" alt="{{ item.name }}"> #}
+                    </div>
+                    <div class="item-description">
+                        <h2>
+                            {{ item.name }}
+                        </h2>
+                        <p>n°{{ item.id }}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+{% endif %}
 
 {% endblock %}

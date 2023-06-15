@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de l'élément {{ borrow.id }}{% endblock %}
+
+{% block body %}
+
+<h1>Détails de l'élément {{ borrow.id }}</h1>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Chef de projet</th>
+                <th>Responsable</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Description</th>
+                {% if borrow.restituted %}
+                    <th>Description de rendu</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ borrow.id }}</td>
+                <td>{{ borrow.projectManager.lastName}} {{ borrow.projectManager.firstName}}</td>
+                <td>{{ borrow.stakeholder.lastName}} {{ borrow.stakeholder.firstName}}</td>
+                <td>{{ borrow.startDate|date("d/m/Y")}}</td>                
+                <td>{{ borrow.endDate|date("d/m/Y") }}</td>
+                <td>{{ borrow.description }}</td>    
+                {% if borrow.restituted %}
+                    <td>{{ borrow.returnDescription}}</td>      
+                {% endif %}     
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Article</th>
+                <th>Quantité</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.stock }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

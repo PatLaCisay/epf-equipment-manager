@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Item;
 use App\Entity\Group;
 use App\Entity\Borrow;
 use Doctrine\Persistence\ManagerRegistry;
@@ -38,6 +39,38 @@ class BorrowRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findItems(): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            "SELECT it
+            FROM App\Entity\Item it
+            WHERE it.id IN (
+                SELECT i.id
+                FROM App\Entity\ItemBorrow ib
+                LEFT JOIN ib.item i
+                LEFT JOIN ib.borrow b
+            )"
+        );
+
+        return $query->getResult();
+    }
+
+    public function findQuantity(Item $item) 
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery('
+        SELECT b.quantity
+        FROM App\Entity\ItemBorrow b
+        WHERE b.item = :itemId
+        ');
+        $query->setParameter('itemId', $item->getId());
+
+        dd($query->getScalarResult());
     }
 
 //    /**

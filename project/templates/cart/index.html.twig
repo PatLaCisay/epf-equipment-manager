@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CartController!{% endblock %}
+
+{% block body %}
+
+    <h1>Votre panier</h1>
+
+<div class="container">
+    {% if items|length == 0 %}
+    <h3>Votre panier est vide </h3>
+    
+    {% else %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Objet</th>
+                    <th>Quantité</th>
+                    <th>Supprimer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                {% for element in items %}
+                    <td><img src="https://picsum.photos/200/200" alt="image">{# <img class="image" width="200" height="150" src="data:image/png;base64,{{element.item.image}}" alt="{{element.item.name}}">#}</td>
+                    <td>{{element.item.name}}</td>
+                    <td>
+                        {{element.quantity}}
+                        <a href="{{path('app_cart_add', {id: element.item.id})}}">Ajouter</a>
+                        <a href="{{path('app_cart_remove', {id: element.item.id})}}">Retirer</a>
+                    </td>
+                    <td>
+                        <a href="{{path('app_cart_delete', {id: element.item.id})}}">Supprimer</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{path('app_add_borrow')}}">
+            <button class="btn btn-lg btn-primary" href="{{path('app_add_borrow')}}">
+                Valider mon emprunt
+            </button>
+        </a>
+    {% endif %}
+
+</div>
+
+{% endblock %}

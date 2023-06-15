@@ -10,6 +10,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+/**
+ *
+ * @IsGranted("IS_AUTHENTICATED_FULLY")
+ */
 
 class CategoryController extends AbstractController
 {
@@ -34,9 +39,11 @@ class CategoryController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $repo->add($form->getData(), true);
+            
 
-            return $this->redirectToRoute('app_category');
+            return $this->redirectToRoute('app_admin');
         }
 
         return $this->renderForm('category/add.html.twig', [

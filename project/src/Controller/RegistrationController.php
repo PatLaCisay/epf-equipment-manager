@@ -44,16 +44,16 @@ class RegistrationController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
-            /*TODO 
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
                 (new TemplatedEmail())
-                    ->from(new Address('equipmentmanager@epf.fr', 'Equipment Manager Bot'))
+                    ->from(new Address($_ENV["EMAIL_ADDRESS"], 'Equipment Manager Bot')) // equipmentmanager@epf.fr
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
-            */
 
             return $this->redirectToRoute('app_home');
         }
@@ -87,9 +87,8 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_register');
         }
 
-        // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
-
-        return $this->redirectToRoute('app_register');
+        return $this->render('registration/verified.html.twig', [
+            'user' => $user,
+        ]);
     }
 }

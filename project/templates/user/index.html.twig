@@ -1,20 +1,57 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Nom de l'utilisateur {{ user.firstName }}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<h1>Utilisateur: {{ user.lastName }} {{ user.firstName }}</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/project/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/project/templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a></code></li>
-    </ul>
+
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Mes emprunts:</th>
+            </tr>
+        </thead>
+    </table>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Chef de projet</th>
+                <th>Responsable</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for borrow in borrows %}
+            <tr>
+                <td>{{ borrow.id }}</td>
+                <td>{{ borrow.projectManager.lastName}} {{ borrow.projectManager.firstName}}</td>
+                <td>{{ borrow.stakeholder.lastName}} {{ borrow.stakeholder.firstName}}</td>
+                <td>{{ borrow.startDate|date("d/m/Y")}}</td>                
+                <td>{{ borrow.endDate|date("d/m/Y") }}</td>    
+            </tr>
+            {% else %}
+            <tr>
+                <td><strong>Aucun emprunt réalisé.</strong></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="container-form">
+    <a href="/user/delete/{{user.id}}">
+        <button type="button" class="btn btn-primary" id="myButton">Supprimer mon compte</button>
+    </a>
+    <br>
+    <br>
+    <a>
+        <button type="button" class="btn btn-primary" id="myButton">Modifier mon mot de passe</button>
+    </a>
 </div>
 {% endblock %}
