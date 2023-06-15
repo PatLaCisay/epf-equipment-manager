@@ -19,7 +19,7 @@
         <tbody>
             <tr>
                 <td>{{ item.id }}</td>
-                <td><img class="image" src="data:image/png;base64,{{ item.image }}" width="200" height="150" alt="{{ item.name }}"> </td>
+                <td><img src="https://picsum.photos/200/200" alt="image">{# <img src="data:image/png;base64,{{ item.image }}" alt="{{ item.name }}"> #}</td>
                 <td>{{ item.name }}</td>
                 <td><a href="/category/{{ item.category.id }}">{{ item.category.name }}</a></td>
                 <td>{{ item.stock }}</td>

@@ -22,7 +22,7 @@
                 <tr>
                 {% for item in items %}
                     <td>{{item.id}}</td>
-                    <td><img class="image" width="200" height="150" src="data:image/png;base64,{{item.image}}" alt="{{item.name}}"></td>
+                    <td><img src="https://picsum.photos/200/200" alt="image">{# <img src="data:image/png;base64,{{ item.image }}" alt="{{ item.name }}"> #}</td>
                     <td>{{item.name}}</td>
                     {% if item.stock <=5 %}
                     <td style="background : rgba(255,0,0,0.5);">
