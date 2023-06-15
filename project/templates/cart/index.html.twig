@@ -37,10 +37,11 @@
                 {% endfor %}
             </tbody>
         </table>
-
-        <button class="btn btn-lg btn-primary" href="{{path('app_add_borrow')}}">
-            Valider mon emprunt
-        </button>
+        <a href="{{path('app_add_borrow')}}">
+            <button class="btn btn-lg btn-primary" href="{{path('app_add_borrow')}}">
+                Valider mon emprunt
+            </button>
+        </a>
     {% endif %}
 
 </div>

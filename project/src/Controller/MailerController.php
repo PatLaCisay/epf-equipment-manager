@@ -59,7 +59,7 @@ class MailerController extends AbstractController
         return $this->redirectToRoute("app_borrow");
     }
 
-    #[Route('/mail/revoke/borrow/{id}', name: 'app_borrow_mail')]
+    #[Route('/mail/revoke/borrow/{id}', name: 'app_borrow_revoke_mail')]
     public function revokeBorrow(MailerInterface $mailer, Borrow $borrow, Environment $twig, ManagerRegistry $doctrine ): Response
     {
         

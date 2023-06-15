@@ -21,15 +21,22 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Core\Security;
+
+/**
+ *
+ * @IsGranted("ROLE_ADMIN")
+ */
 
 
 class AdminController extends AbstractController
 {
     #[Route('/admin', name: 'app_admin')]
-    public function index(UserRepository $userRepo, CategoryRepository $cateRepo, ItemRepository $itemRepo): Response
+    public function index(UserRepository $userRepo, CategoryRepository $cateRepo, ItemRepository $itemRepo, Security $security): Response
     {
-        $userId = $userRepo->find(1);
-        $pendingBorrows = $userRepo->findPendingBorrows($userId);
+        $user = $security->getUser();
+        $pendingBorrows = $userRepo->findPendingBorrows($user);
 
         $dataSet = $itemRepo->getDataSet($cateRepo);
 
@@ -41,8 +48,13 @@ class AdminController extends AbstractController
     }
 
     #[Route('/admin/validate/{id}', name: 'app_admin_validate_borrow')]
-    public function validateBorrow(Borrow $borrow,  ManagerRegistry $doctrine ): Response
+    public function validateBorrow(Borrow $borrow, BorrowRepository $borrowRepo ,  ManagerRegistry $doctrine ): Response
     {
+        
+        foreach($borrowRepo->findItems() as $item){
+            $item->setStock( $item->getStock()- 1);
+        }
+
         $borrow->setAccepted(true);
         $doctrine->getManager()->flush();
 

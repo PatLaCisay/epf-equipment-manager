@@ -22,14 +22,19 @@ class BorrowType extends AbstractType
                 'required' => true,
                 'input' => 'datetime_immutable',
                 'widget' => 'single_text',
+                'label' => 'Date de début'
             ])
             ->add('endDate', DateType::class, [
                 'data' => new \DateTimeImmutable(),
                 'required' => true,
                 'input' => 'datetime_immutable',
                 'widget' => 'single_text',
+                'label' => 'Date de fin'
             ])
-            ->add('description', TextType::class, ['required' => true])
+            ->add('description', TextType::class, [
+                'required' => true,
+                'label' => 'Description'
+            ])
             ->add('stakeholder', EntityType::class, [
                 'label'=>"Email du responsable du materiel",
                 'class' => User::class,
